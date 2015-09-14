@@ -1,5 +1,4 @@
-cj
 Django==1.8.4
 Pillow==2.9.0
+djangorestframework==3.2.3
 wsgiref==0.1.2
-
