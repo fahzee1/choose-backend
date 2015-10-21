@@ -3,6 +3,7 @@ import uuid
 import json
 import base64
 from django.core.files.base import ContentFile
+from django.db.models import F
 from django.shortcuts import render
 from models import TheVote,Category
 from users.models import UserProfile
@@ -15,7 +16,7 @@ check_token = decorator_from_middleware(TokenCheck)
 """
 Token authentication must be in the form
 
-Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+Authorization:9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
 
 Status codes
 400 = Bad request
@@ -28,6 +29,101 @@ class HttpTable(object):
     post = 'POST'
     put = 'PUT'
     delete = 'DELETE'
+
+def my_response(data={},success=False,reason='Failed request',status_code=200):
+    if status_code == 404:
+        reason = 'Object not found'
+
+    if status_code == 200 or status_code == 201:
+        reason = ''
+
+    message = {}
+    message['success'] = success
+    message['reason'] = reason
+    if data:
+        message['data'] = data
+
+
+
+    response = JsonResponse(message)
+    response.status_code = status_code
+    return response
+
+
+#@check_token
+def votes(request,pk):
+    message = {'success':False}
+
+    if request.method == HttpTable.put:
+        data = json.loads(request.body)
+        vote = TheVote.objects.filter(pk=pk)[0]
+        if not vote:
+            return my_response(status_code=404)
+
+        update = data.get('update',None)
+        value = data.get('value',None)
+        if update == 'vote':
+            if value == 'yes':
+                # update yes count
+                vote.total_votes_yes = F('total_votes_yes') + 1
+                vote.save()
+
+            elif value == 'no':
+                #update no count
+                vote.total_votes_no = F('total_votes_no') + 1
+                vote.save()
+
+            else:
+                pass
+
+            message['success'] = True
+            return my_response(success=True)
+
+        if update == 'facebook':
+            if value == True:
+                vote.facebook_shared = True
+                vote.save()
+                message['success'] = True
+                return my_response(success=True)
+
+
+    elif request.method == HttpTable.delete:
+        try:
+            vote = TheVote.objects.get(pk=pk)
+            vote.delete()
+            return my_response(success=True)
+
+        except TheVote.DoesNotExist:
+            return my_response(success=False,reason='')
+
+    elif request.method == HttpTable.get:
+        try:
+            vote = TheVote.objects.get(pk=pk)
+            data = vote.to_dict()
+            return my_response(data,success=True)
+
+        except TheVote.DoesNotExist:
+            reason = 'Vote with pk %s doesnt exist' % pk
+            return my_response(reason=reason,status_code=404)
+    else:
+        reason = "%s method not allowed at this endpoint" % request.method 
+        return my_response(reason=reason,status_code=405)
+
+@check_token
+def category(request):
+    message = {'success':False}
+    http_method = HttpTable.get
+
+    if request.method == http_method:
+        categories = Category.list_categories()
+        del message['success']
+        message['categories'] = categories
+        return my_response(message,success=True)
+
+    reason = "%s method not allowed at this endpoint" % request.method 
+    return my_response(status_code=405)
+
+
 
 
 @check_token
@@ -47,19 +143,16 @@ def show_categories(request,pk):
         else:
             votes = TheVote.objects.filter(category__pk=pk)
 
-        message['success'] = True
-        message['data'] = TheVote.queryset_to_dict(votes)
+        message['votes'] = TheVote.queryset_to_dict(votes)
         if newOffset:
             message['next_offset'] = str(newOffset)
             message['next_limit'] = str(limit)
+        del message['success']
 
-        return JsonResponse(message)
+        return my_response(message,success=True)
 
-    message['reason'] = "Only '%s' to this endpoint" % http_method
-    response = JsonResponse(message)
-    response.status_code = 405
-    return response
-    return JsonResponse(message)
+    reason = "Only '%s' to this endpoint" % http_method
+    return my_response(reason=reason,status_code=405)
 
 
 #@check_token
@@ -78,18 +171,16 @@ def show_featured(request):
         else:
             featured = TheVote.objects.filter(featured=True)
 
-        message['success'] = True
-        message['data'] = TheVote.queryset_to_dict(featured)
+        message['votes'] = TheVote.queryset_to_dict(featured)
         if newOffset:
             message['next_offset'] = str(newOffset)
             message['next_limit'] = str(limit)
 
-        return JsonResponse(message)
+        del message['success']
+        return my_response(message,success=True)
 
-    message['reason'] = "Only '%s' to this endpoint" % http_method
-    response = JsonResponse(message)
-    response.status_code = 405
-    return response
+    reason = "Only '%s' to this endpoint" % http_method
+    return my_response(reason=reason,status_code=405)
 
 
 @check_token
@@ -117,17 +208,14 @@ def create_vote(request):
             user = UserProfile.objects.get(facebook_id=facebook_id)
 
         except UserProfile.DoesNotExist:
-            message['reason'] = 'fb id:%s user doesnt exist' % facebook_id
-            response = JsonResponse(message)
-            response.status_code = 404
-            return response
+            reason = 'fb id:%s user doesnt exist' % facebook_id
+            return my_response(reason=reason,status_code=404)
 
         try:
             category = Category.objects.get(pk=category_id)
         except Category.DoesNotExist:
-            message['reason'] = 'category id:%s category doesnt exist' % category
-            response = JsonResponse(message)
-            response.status_code = 404
+            reason = 'category id:%s category doesnt exist' % category
+            return my_response(reason=reason,status_code=404)
 
         image = base64.b64decode(imageData)
         randomNumbers = str(uuid.uuid4())[:10]
@@ -140,16 +228,10 @@ def create_vote(request):
         vote.image.save(imagename,ContentFile(image))
         vote.save()
 
-        message['success'] = True
-        response = JsonResponse(message)
-        response.status_code = 201
-        return response
+    
+        return my_response(success=True,status_code=201)
 
 
 
-
-
-    message['reason'] = "Only '%s' to this endpoint" % http_method
-    response = JsonResponse(message)
-    response.status_code = 405
-    return JsonResponse(message)
+    reason = "Only '%s' to this endpoint" % http_method
+    return my_response(reason=reason,status_code=405)

@@ -2,7 +2,7 @@ import pdb
 import json
 from django.shortcuts import render
 from django.views.generic import View
-from django.http import HttpResponse,HttpResponseBadRequest,JsonResponse
+from votes.views import my_response
 from models import UserProfile, Token
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import decorator_from_middleware_with_args, decorator_from_middleware
@@ -27,20 +27,16 @@ def get_me(request):
     if request.method == 'GET':
         token = request.META.get('HTTP_AUTHORIZATION',None)
         if not token:
-            message['reason'] = 'No token provided'
-            response = JsonResponse(message)
-            response.status_code = 403
-            return response
+            reason = 'No token provided'
+            return my_response(reason=reason,status_code=403)
 
         tokenObj = get_object_or_404(Token,key=token)
         message['user'] = tokenObj.user.to_dict(token=True)
-        message['success'] = True
-        return JsonResponse(message)
+        del message['success']
+        return my_response(message,success=True)
 
-    message['reason'] = "Only 'GET' to this endpoint"
-    response = JsonResponse(message)
-    response.status_code = 405
-    return response
+    reason = "Only 'GET' to this endpoint"
+    return my_response(reason=reason,status_code=405)
 
 
 
@@ -58,10 +54,8 @@ def login(request):
         data = json.loads(request.body)
         for name in params:
             if name not in data.keys():
-                message['reason'] = 'Missing %s param' % name
-                response = JsonResponse(message)
-                response.status_code = 400
-                return response
+                reason = 'Missing %s param' % name
+                return my_response(reason=reason,status_code=400)
 
 
         name = data['name']
@@ -72,16 +66,14 @@ def login(request):
                                                           facebook_id=fbID)
 
         # Return data
-        message['success'] = True
+        del message['success']
         message['user'] = user.to_dict() 
 
-        return JsonResponse(message)
+        return my_response(message,success=True)
 
     # Not POST method so return bad response
-    message['reason'] = "Only 'POST' to this endpoint"
-    response = JsonResponse(message)
-    response.status_code = 405 
-    return response
+    reason = "Only 'POST' to this endpoint"
+    return my_response(reason=reason,status_code=405)
 
 
 @check_token
@@ -95,10 +87,8 @@ def user_search(request):
         data = json.loads(request.body)
         for name in params:
             if name not in data.keys():
-                message['reason'] = 'Missing %s param' % name
-                response = JsonResponse(message)
-                response.status_code = 400
-                return response
+                reason = 'Missing %s param' % name
+                return my_response(reason=reason,status_code=400)
 
 
         name = data['name']
@@ -121,10 +111,8 @@ def user_search(request):
 
 
 
-    message['reason'] = "Only 'GET' to this endpoint"
-    response = JsonResponse(message)
-    response.status_code = 405
-    return response
+    reason = "Only 'GET' to this endpoint"
+    return my_response(reason=reason,status_code=405)
 
 
 

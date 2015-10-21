@@ -19,7 +19,22 @@ class Category(Base):
         data['name'] = self.name
         data['id'] = self.pk
         return data
+    @classmethod
+    def list_categories(cls):
+        data = {}
+        categories = cls.objects.all()
+        for i in categories:
+            data[i.pk] = i.name
+        return data
 
+
+
+"""
+>>> from django.db.models import F
+>>> product = Product.objects.get(name='Venezuelan Beaver Cheese')
+>>> product.number_sold = F('number_sold') + 1
+>>> product.save()
+"""
 
 class TheVote(Base):
     user = models.ForeignKey('users.UserProfile',related_name='twin_vote')
@@ -43,6 +58,7 @@ class TheVote(Base):
         data['category'] = self.category.to_dict()
         data['user'] = self.user.to_dict()
         data['vote'] = {
+                        'id':self.pk,
                         'image':self.image.url,
                         'left_label':self.left_label,
                         'right_label':self.right_label,
