@@ -2,10 +2,10 @@ from django.conf.urls import include, url
 import views
 
 urlpatterns = [
-    url(r'^votes/(?P<pk>[0-9]+)$', views.votes, name="votes"),
-    url(r'^votes/category/(?P<pk>[0-9]+)$', views.show_categories, name="category_object"),
-    url(r'^votes/category/$', views.category, name="category"),
-    url(r'^votes/featured/$', views.show_featured, name="featured"),
-    url(r'^votes/create/$', views.create_vote, name="create_vote"),
+    url(r'^cards/all/$', views.show_cards, name="cards"),
+    url(r'^cards/featured/$', views.show_featured, name="featured"),
+    url(r'^cards/create/$', views.create_card, name="create_card"),
+    url(r'^cards/update/$', views.update_card, name="update_card"),
+    url(r'^cards/delete/$', views.delete_card, name="delete_card"),
 
 ]

@@ -2,10 +2,11 @@ import pdb
 import uuid
 import json
 import base64
+from django.conf import settings
 from django.core.files.base import ContentFile
 from django.db.models import F
 from django.shortcuts import render
-from models import TheVote,Category
+from models import Card
 from users.models import UserProfile
 from django.http import JsonResponse
 from django.utils.decorators import decorator_from_middleware_with_args, decorator_from_middleware
@@ -50,28 +51,94 @@ def my_response(data={},success=False,reason='Failed request',status_code=200):
     return response
 
 
-#@check_token
-def votes(request,pk):
-    message = {'success':False}
 
+@check_token
+def show_cards(request):
+    message = {'success':False}
+    http_method = HttpTable.get
+    if request.method == http_method:
+        limit = request.GET.get('limit',None)
+        offset = request.GET.get('offset',None)
+        newOffset = None
+        if limit and offset:
+            all_cards = Card.objects.filter(featured=False)[int(offset):int(limit)]
+            if all_cards:
+                # only return this if we have data so client knows to stop fetching
+                newOffset = int(limit) + int(offset) + 1
+        else:
+            all_cards = Card.objects.filter(featured=False)
+
+        message['cards'] = Card.queryset_to_dict(all_cards)
+        if newOffset:
+            message['next_offset'] = str(newOffset)
+            message['next_limit'] = str(limit)
+
+        del message['success']
+        return my_response(message,success=True)
+
+    reason = "Only '%s' to this endpoint" % http_method
+    return my_response(reason=reason,status_code=405)
+
+@check_token
+def show_featured(request):
+    message = {'success':False}
+    http_method = HttpTable.get
+    if request.method == http_method:
+        limit = request.GET.get('limit',None)
+        offset = request.GET.get('offset',None)
+        newOffset = None
+        if limit and offset:
+            featured = Card.objects.filter(featured=True)[int(offset):int(limit)]
+            if featured:
+                # only return this if we have data so client knows to stop fetching
+                newOffset = int(limit) + int(offset) + 1
+        else:
+            featured = Card.objects.filter(featured=True)
+
+        message['votes'] = Card.queryset_to_dict(featured)
+        if newOffset:
+            message['next_offset'] = str(newOffset)
+            message['next_limit'] = str(limit)
+
+        del message['success']
+        return my_response(message,success=True)
+
+    reason = "Only '%s' to this endpoint" % http_method
+    return my_response(reason=reason,status_code=405)
+
+@check_token
+def update_card(request):
+    message = {'success':False}
     if request.method == HttpTable.put:
-        data = json.loads(request.body)
-        vote = TheVote.objects.filter(pk=pk)[0]
-        if not vote:
+        params = ['update_type','value','card_id']
+        data = json.loads(request.body,strict=False)
+        for name in params:
+            if name not in data.keys():
+                message['reason'] = 'Missing %s param' % name
+                response = JsonResponse(message)
+                response.status_code = 400
+                return response
+
+
+        update_type = data.get('update_type',None)
+        value = data.get('value',None)
+        card_id = data.get('card_id',None)
+
+        card = Card.objects.filter(id=card_id)[0]
+        if not card:
             return my_response(status_code=404)
 
-        update = data.get('update',None)
-        value = data.get('value',None)
-        if update == 'vote':
-            if value == 'yes':
-                # update yes count
-                vote.total_votes_yes = F('total_votes_yes') + 1
-                vote.save()
+        if update_type == 'vote':
+            if value == 'left':
+                # update left count
+                card.left_votes_count = F('left_votes_count') + 1
+                card.save()
 
-            elif value == 'no':
-                #update no count
-                vote.total_votes_no = F('total_votes_no') + 1
-                vote.save()
+            elif value == 'right':
+                #update right count
+                card.right_votes_count = F('right_votes_count') + 1
+                card.save()
+
 
             else:
                 pass
@@ -81,115 +148,43 @@ def votes(request,pk):
 
         if update == 'facebook':
             if value == True:
-                vote.facebook_shared = True
-                vote.save()
+                card.facebook_shared = True
+                card.save()
                 message['success'] = True
                 return my_response(success=True)
 
 
-    elif request.method == HttpTable.delete:
-        try:
-            vote = TheVote.objects.get(pk=pk)
-            vote.delete()
-            return my_response(success=True)
-
-        except TheVote.DoesNotExist:
-            return my_response(success=False,reason='')
-
-    elif request.method == HttpTable.get:
-        try:
-            vote = TheVote.objects.get(pk=pk)
-            data = vote.to_dict()
-            return my_response(data,success=True)
-
-        except TheVote.DoesNotExist:
-            reason = 'Vote with pk %s doesnt exist' % pk
-            return my_response(reason=reason,status_code=404)
-    else:
-        reason = "%s method not allowed at this endpoint" % request.method 
-        return my_response(reason=reason,status_code=405)
-
 @check_token
-def category(request):
+def delete_card(request):
     message = {'success':False}
-    http_method = HttpTable.get
-
+    http_method = HttpTable.delete
     if request.method == http_method:
-        categories = Category.list_categories()
-        del message['success']
-        message['categories'] = categories
-        return my_response(message,success=True)
+        params = ['card_id']
+        data = json.loads(request.body)
+        for name in params:
+            if name not in data.keys():
+                message['reason'] = 'Missing %s param' % name
+                response = JsonResponse(message)
+                response.status_code = 400
+                return response
 
-    reason = "%s method not allowed at this endpoint" % request.method 
-    return my_response(status_code=405)
-
-
-
-
-@check_token
-def show_categories(request,pk):
-    message = {'success':False}
-    http_method = HttpTable.get
-    if request.method == http_method:
-        limit = request.GET.get('limit',None)
-        offset = request.GET.get('offset',None)
-        newOffset = None
-        if limit and offset:
-            votes = TheVote.objects.filter(category__pk=pk)[int(offset):int(limit)]
-            if votes:
-                # only return this if we have data so client knows to stop fetching
-                newOffset = int(limit) + int(offset) + 1
-
-        else:
-            votes = TheVote.objects.filter(category__pk=pk)
-
-        message['votes'] = TheVote.queryset_to_dict(votes)
-        if newOffset:
-            message['next_offset'] = str(newOffset)
-            message['next_limit'] = str(limit)
-        del message['success']
-
-        return my_response(message,success=True)
+        card_id = data.get('card_id',None)
+        card = Card.objects.filter(id=card_id)[0]
+        if not card:
+            return my_response(status_code=404)
+        card.delete()
+        return my_response(success=True)
 
     reason = "Only '%s' to this endpoint" % http_method
     return my_response(reason=reason,status_code=405)
 
-
-#@check_token
-def show_featured(request):
-    message = {'success':False}
-    http_method = HttpTable.get
-    if request.method == http_method:
-        limit = request.GET.get('limit',None)
-        offset = request.GET.get('offset',None)
-        newOffset = None
-        if limit and offset:
-            featured = TheVote.objects.filter(featured=True)[int(offset):int(limit)]
-            if featured:
-                # only return this if we have data so client knows to stop fetching
-                newOffset = int(limit) + int(offset) + 1
-        else:
-            featured = TheVote.objects.filter(featured=True)
-
-        message['votes'] = TheVote.queryset_to_dict(featured)
-        if newOffset:
-            message['next_offset'] = str(newOffset)
-            message['next_limit'] = str(limit)
-
-        del message['success']
-        return my_response(message,success=True)
-
-    reason = "Only '%s' to this endpoint" % http_method
-    return my_response(reason=reason,status_code=405)
-
-
 @check_token
-def create_vote(request):
+def create_card(request):
     message = {'success':False}
     http_method = HttpTable.post
     if request.method == http_method:
-        params = ['facebook_id','category_id','image','left_label','right_label']
-        data = json.loads(request.body)
+        params = ['facebook_id','image','question','question_type']
+        data = json.loads(request.body,strict=False)
         for name in params:
             if name not in data.keys():
                 message['reason'] = 'Missing %s param' % name
@@ -199,10 +194,11 @@ def create_vote(request):
 
 
         facebook_id = data['facebook_id']
-        category_id = data['category_id']
         imageData = data['image']
-        left_label = data['left_label']
-        right_label = data['right_label']
+        question = data['question']
+        question_type = data['question_type']
+        if question_type != settings.QUESTION_TYPE_A_B and question_type != settings.QUESTION_TYPE_YES_NO:
+            return my_response(reason='Not valid question type. 100 or 101',status_code=400)
 
         try:
             user = UserProfile.objects.get(facebook_id=facebook_id)
@@ -211,25 +207,18 @@ def create_vote(request):
             reason = 'fb id:%s user doesnt exist' % facebook_id
             return my_response(reason=reason,status_code=404)
 
-        try:
-            category = Category.objects.get(pk=category_id)
-        except Category.DoesNotExist:
-            reason = 'category id:%s category doesnt exist' % category
-            return my_response(reason=reason,status_code=404)
-
+        
         image = base64.b64decode(imageData)
         randomNumbers = str(uuid.uuid4())[:10]
         imagename = '%s-%s.jpg' % (user.username,randomNumbers)
-        vote = TheVote()
-        vote.user = user
-        vote.category = category
-        vote.right_label = right_label
-        vote.left_label = left_label
-        vote.image.save(imagename,ContentFile(image))
-        vote.save()
-
-    
-        return my_response(success=True,status_code=201)
+        card = Card()
+        card.user = user
+        card.question = question
+        card.question_type = question_type
+        card.image.save(imagename,ContentFile(image))
+        card.save()
+        message['card_id'] = card.id;
+        return my_response(message,success=True,status_code=201)
 
 
 

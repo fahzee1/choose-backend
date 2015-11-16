@@ -19,6 +19,7 @@ class Category(Base):
         data['name'] = self.name
         data['id'] = self.pk
         return data
+
     @classmethod
     def list_categories(cls):
         data = {}
@@ -29,6 +30,7 @@ class Category(Base):
 
 
 
+
 """
 >>> from django.db.models import F
 >>> product = Product.objects.get(name='Venezuelan Beaver Cheese')
@@ -36,14 +38,14 @@ class Category(Base):
 >>> product.save()
 """
 
-class TheVote(Base):
-    user = models.ForeignKey('users.UserProfile',related_name='twin_vote')
-    category = models.ForeignKey(Category,related_name='category')
+class Card(Base):
+    user = models.ForeignKey('users.UserProfile',related_name='card')
+    category = models.ForeignKey(Category,related_name='category',blank=True,null=True)
     image = models.ImageField(upload_to='images/%Y/%m/%d')
-    left_label = models.CharField(max_length=255, blank=False, help_text='Most likely name of user')
-    right_label = models.CharField(max_length=255, blank=False,help_text='Most likey name of celebrity')
-    total_votes_yes = models.BigIntegerField(default=0)
-    total_votes_no = models.BigIntegerField(default=0)
+    question = models.CharField(max_length=255, blank=False, help_text='Title of card')
+    question_type = models.IntegerField(default=0)
+    left_votes_count = models.BigIntegerField(default=0)
+    right_votes_count = models.BigIntegerField(default=0)
     facebook_shared = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)
 
@@ -51,23 +53,22 @@ class TheVote(Base):
         ordering = ['-created']
 
     def __unicode__(self):
-        return "%s vs %s" % (self.left_label,self.right_label)
+        return "%s (%s)" % (self.question,self.user)
 
     def to_dict(self):
         data = {}
-        data['category'] = self.category.to_dict()
+        #data['category'] = self.category.to_dict()
         data['user'] = self.user.to_dict()
-        data['vote'] = {
+        data['card'] = {
                         'id':self.pk,
                         'image':self.image.url,
-                        'left_label':self.left_label,
-                        'right_label':self.right_label,
-                        'total_votes':self.total_votes_yes + self.total_votes_no,
-                        'votes_yes':self.total_votes_yes,
-                        'votes_no':self.total_votes_no,
+                        'left_count':self.left_votes_count,
+                        'right_count':self.right_votes_count,
+                        'total_votes':self.total_votes(),
                         'featured':self.featured,
                         'facebook_shared':self.facebook_shared,
-                        'created':self.created
+                        'created':self.created,
+                        'percentage':self.get_percentage()
                         }
 
         return data
@@ -81,16 +82,22 @@ class TheVote(Base):
         return data
 
     def get_percentage(self):
-        total = self.total_votes_yes + self.total_votes_no
-        yes = float(self.total_votes_yes) / float(total) * 100
-        no = float(self.total_votes_no) / float(total) * 100
+        total = self.total_votes()
+        if (total > 0):
+            left = float(self.left_votes_count) / float(total) * 100
+            right = float(self.right_votes_count) / float(total) * 100
+        else:
+            left = 0.0
+            right = 0.0
 
         data = {
-            'yes':yes,
-            'no':no,
-            'total':total
+            'left':left,
+            'right':right
         }
 
         return data
+
+    def total_votes(self):
+        return self.left_votes_count + self.right_votes_count
 
 

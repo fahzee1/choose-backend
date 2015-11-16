@@ -58,16 +58,16 @@ def login(request):
                 return my_response(reason=reason,status_code=400)
 
 
-        name = data['name']
-        email = data['email']
-        fbID = data['facebook_id']
+        name = data.get('name',None)
+        email = data.get('email',None)
+        fbID = data.get('facebook_id',None)
         name = name.replace(' ','_')
         user, created = UserProfile.objects.get_or_create(username=name,
                                                           facebook_id=fbID)
 
         # Return data
         del message['success']
-        message['user'] = user.to_dict() 
+        message['user'] = user.to_dict(token=True) 
 
         return my_response(message,success=True)
 
@@ -116,27 +116,3 @@ def user_search(request):
 
 
 
-@check_token
-def user_object(request,pk):
-    """
-    /users/:pk endpoint
-    """
-    profile = get_object_or_404(UserProfile,pk=pk)
-
-    if request.method == 'GET':
-        serializer = UserProfileSerializer(profile)
-        return Response(serializer.data)
-
-    if request.method == 'PUT':
-        serializer = UserProfileSerializer(profile,data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors,status.HTTP_400_BAD_REQUEST)
-
-    if request.method == 'POST':
-        pass
-
-    if request.method == 'DELETE':
-        profile.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)

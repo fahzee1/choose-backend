@@ -1,6 +1,6 @@
 from django.contrib import admin
-from models import Category, TheVote
+from models import Category, Card
 # Register your models here.
 
 admin.site.register(Category)
-admin.site.register(TheVote)
+admin.site.register(Card)

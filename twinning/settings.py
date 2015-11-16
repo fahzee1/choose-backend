@@ -116,6 +116,11 @@ MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'users.UserProfile'
 
+# QuestionTypes
+QUESTION_TYPE_A_B = 100
+QUESTION_TYPE_YES_NO = 101
+
+
 try:
     from local_settings import *
 except ImportError:
