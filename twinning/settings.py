@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '5n076m!!(kjy3#q@-ub9)t!e+gye0%sj$zb274=uran18%7mg3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.200.187:8000',]
 
 
 # Application definition
@@ -40,6 +40,7 @@ DEFAULT_APPS = (
 )
 
 THIRD_PARTY_APPS = (
+    'cumulus',
 )
 
 MY_APPS = (
@@ -116,9 +117,29 @@ MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'users.UserProfile'
 
+#image storage
+CUMULUS = {
+    'USERNAME': 'cjogbuehi',
+    'API_KEY': '8f331476559e8f3c5255714ad8a1bcfd',
+    'CONTAINER': 'choose-001',
+    'PYRAX_IDENTITY_TYPE': 'rackspace',
+    'USE_SSL':False,
+    'CNAMES':{
+        'http://d4d4fa7cf0b2ba9ea99e-9f937d12f8afada8e7f4b412171af17f.r43.cf1.rackcdn.com':'http://images.trychoose.com'
+    }
+}
+
+DEFAULT_FILE_STORAGE = 'cumulus.storage.CumulusStorage'
+
 # QuestionTypes
 QUESTION_TYPE_A_B = 100
 QUESTION_TYPE_YES_NO = 101
+
+
+#Parse api settings
+APPLICATION_ID = "Jnloet4uKj9z5hJOaVdiIKRRrOzLCUf1COzse16Z"
+REST_API_KEY = "3JwjuE2REL6zrAyIEjMfoDouECBFS27E5HaToZIu"
+MASTER_KEY = "NZMD1EVuQ8DFbOGN8RCl6iYb1llRxD48U9hRMLQE"
 
 
 try:

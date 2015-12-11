@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.files.base import ContentFile
 from django.db.models import F
 from django.shortcuts import render
-from models import Card
+from models import Card, ShareText
 from users.models import UserProfile
 from django.http import JsonResponse
 from django.utils.decorators import decorator_from_middleware_with_args, decorator_from_middleware
@@ -33,7 +33,7 @@ class HttpTable(object):
 
 def my_response(data={},success=False,reason='Failed request',status_code=200):
     if status_code == 404:
-        reason = 'Object not found'
+        reason = 'Object not found - %s' % reason
 
     if status_code == 200 or status_code == 201:
         reason = ''
@@ -54,19 +54,38 @@ def my_response(data={},success=False,reason='Failed request',status_code=200):
 
 @check_token
 def show_cards(request):
+    """
+    statuc code...
+
+    200 = everything is normal should have cards to show
+    230 = no cards are created
+    231 = stop fetching no more items in DB
+    """
+
     message = {'success':False}
+    status_code = 200
     http_method = HttpTable.get
+    query = request.GET.get('q',None)
+    if query == 'featured':
+        featured = True
+    else:
+        featured = False
+
     if request.method == http_method:
         limit = request.GET.get('limit',None)
         offset = request.GET.get('offset',None)
         newOffset = None
         if limit and offset:
-            all_cards = Card.objects.filter(featured=False)[int(offset):int(limit)]
+            offset = int(offset)
+            limit = int(limit)
+            temp_limit = offset + limit
+
+            all_cards = Card.objects.select_related().filter(featured=featured)[offset:temp_limit]
             if all_cards:
                 # only return this if we have data so client knows to stop fetching
-                newOffset = int(limit) + int(offset) + 1
+                newOffset = int(limit) + int(offset) 
         else:
-            all_cards = Card.objects.filter(featured=False)
+            all_cards = Card.objects.select_related().filter(featured=featured)[:50]
 
         message['cards'] = Card.queryset_to_dict(all_cards)
         if newOffset:
@@ -79,104 +98,90 @@ def show_cards(request):
     reason = "Only '%s' to this endpoint" % http_method
     return my_response(reason=reason,status_code=405)
 
+
 @check_token
-def show_featured(request):
+def update_card(request,id):
     message = {'success':False}
-    http_method = HttpTable.get
+    http_method = HttpTable.put
     if request.method == http_method:
-        limit = request.GET.get('limit',None)
-        offset = request.GET.get('offset',None)
-        newOffset = None
-        if limit and offset:
-            featured = Card.objects.filter(featured=True)[int(offset):int(limit)]
-            if featured:
-                # only return this if we have data so client knows to stop fetching
-                newOffset = int(limit) + int(offset) + 1
-        else:
-            featured = Card.objects.filter(featured=True)
+        data = json.loads(request.body,strict=False)
+        card = Card.objects.filter(id=id)[0]
+        if not card:
+            return my_response(status_code=404)
 
-        message['votes'] = Card.queryset_to_dict(featured)
-        if newOffset:
-            message['next_offset'] = str(newOffset)
-            message['next_limit'] = str(limit)
+        for key, value in data.iteritems():
+            setattr(card,key,value)
 
-        del message['success']
-        return my_response(message,success=True)
+        card.save()
+        return my_response(success=True)
 
     reason = "Only '%s' to this endpoint" % http_method
     return my_response(reason=reason,status_code=405)
 
 @check_token
-def update_card(request):
-    message = {'success':False}
-    if request.method == HttpTable.put:
-        params = ['update_type','value','card_id']
-        data = json.loads(request.body,strict=False)
-        for name in params:
-            if name not in data.keys():
-                message['reason'] = 'Missing %s param' % name
-                response = JsonResponse(message)
-                response.status_code = 400
-                return response
-
-
-        update_type = data.get('update_type',None)
-        value = data.get('value',None)
-        card_id = data.get('card_id',None)
-
-        card = Card.objects.filter(id=card_id)[0]
-        if not card:
+def view_card(request,id):
+    message = {}
+    if request.method == HttpTable.get:
+        try:
+            card = Card.objects.get(id=id)
+        except Card.DoesNotExist:
             return my_response(status_code=404)
 
-        if update_type == 'vote':
-            if value == 'left':
-                # update left count
-                card.left_votes_count = F('left_votes_count') + 1
-                card.save()
+        message['card'] = card.to_dict()
+        return my_response(message,success=True)
 
-            elif value == 'right':
-                #update right count
-                card.right_votes_count = F('right_votes_count') + 1
-                card.save()
+    reason = "Only '%s' to this endpoint" % HttpTable.get
+    return my_response(reason=reason,status_code=405)
 
+@check_token
+def card_vote(request,id,vote):
+    message = {'success':False}
+    http_method = HttpTable.post
+    if request.method == http_method:
+        try:
+            card = Card.objects.get(id=id)
+        except Card.DoesNotExist:
+            return my_response(status_code=404)
+            
+        if int(vote) == 1:
+            # update left count
+            card.left_votes_count = F('left_votes_count') + 1
+            card.save()
 
-            else:
-                pass
+        elif int(vote) == 2:
+            #update right count
+            card.right_votes_count = F('right_votes_count') + 1
+            card.save()
 
-            message['success'] = True
-            return my_response(success=True)
+        else:
+            reason = "'%s' vote either isnt 1 or 2 or isnt in the right format" % vote
+            return my_response(reason=reason,status_code=400)
 
-        if update == 'facebook':
-            if value == True:
-                card.facebook_shared = True
-                card.save()
-                message['success'] = True
-                return my_response(success=True)
+        message['success'] = True
+        return my_response(success=True)
+
+    reason = "Only '%s' to this endpoint" % http_method
+    return my_response(reason=reason,status_code=405)
 
 
 @check_token
-def delete_card(request):
+def delete_card(request,id):
     message = {'success':False}
     http_method = HttpTable.delete
     if request.method == http_method:
-        params = ['card_id']
-        data = json.loads(request.body)
-        for name in params:
-            if name not in data.keys():
-                message['reason'] = 'Missing %s param' % name
-                response = JsonResponse(message)
-                response.status_code = 400
-                return response
-
-        card_id = data.get('card_id',None)
-        card = Card.objects.filter(id=card_id)[0]
-        if not card:
+        try:
+            card = Card.objects.get(id=id)
+        except Card.DoesNotExist:
             return my_response(status_code=404)
+
         card.delete()
         return my_response(success=True)
 
     reason = "Only '%s' to this endpoint" % http_method
     return my_response(reason=reason,status_code=405)
+
+
+
 
 @check_token
 def create_card(request):
@@ -217,10 +222,56 @@ def create_card(request):
         card.question_type = question_type
         card.image.save(imagename,ContentFile(image))
         card.save()
-        message['card_id'] = card.id;
+        message['card'] = card.to_dict();
         return my_response(message,success=True,status_code=201)
 
 
 
     reason = "Only '%s' to this endpoint" % http_method
     return my_response(reason=reason,status_code=405)
+
+def cards(request):
+    message = {'success':False}
+    if request.method == HttpTable.get:
+        # get all cards
+        return show_cards(request)
+
+    elif request.method == HttpTable.post:
+        # create card
+        return create_card(request)
+    else:
+        reason = "Invalid http method (GET or POST)"
+        return my_response(reason=reason,status_code=405)
+
+def cards_object(request,id):
+    if request.method == HttpTable.delete:
+        # delete card with id
+        return delete_card(request,id)
+
+    elif request.method == HttpTable.put:
+        # update card with id
+        return update_card(request,id)
+
+    elif request.method == HttpTable.get:
+        # view card with id
+        return view_card(request,id)
+
+    else:
+        reason = "Invalid http method (DELETE or PUT, GET)"
+        return my_response(reason=reason,status_code=405)
+
+
+@check_token
+def share_text(request):
+    message = {}
+    if request.method == HttpTable.get:
+        message['share_text'] = ShareText.get_lastest_share_text()
+        return my_response(message,success=True)
+
+    reason = "Only '%s' to this endpoint" % HttpTable.get
+    return my_response(reason=reason,status_code=405)
+
+
+
+    
+

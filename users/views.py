@@ -3,6 +3,7 @@ import json
 from django.shortcuts import render
 from django.views.generic import View
 from votes.views import my_response
+from votes.models import Card
 from models import UserProfile, Token
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import decorator_from_middleware_with_args, decorator_from_middleware
@@ -20,6 +21,11 @@ Status codes
 403 = Forbidden
 405 = Not Allowed
 """
+class HttpTable(object):
+    get = 'GET'
+    post = 'POST'
+    put = 'PUT'
+    delete = 'DELETE'
 
 @check_token
 def get_me(request):
@@ -66,7 +72,6 @@ def login(request):
                                                           facebook_id=fbID)
 
         # Return data
-        del message['success']
         message['user'] = user.to_dict(token=True) 
 
         return my_response(message,success=True)
@@ -74,6 +79,116 @@ def login(request):
     # Not POST method so return bad response
     reason = "Only 'POST' to this endpoint"
     return my_response(reason=reason,status_code=405)
+
+@check_token
+def users(request):
+    message = {}
+    if request.method == HttpTable.get:
+        limit = request.GET.get('limit',None)
+        offset = request.GET.get('offset',None)
+        newOffset = None
+        if limit and offset:
+            offset = int(offset)
+            limit = int(limit)
+            temp_limit = offset + limit
+            users = UserProfile.objects.all()[offset:temp_limit]
+            if users:
+                # only return this if we have data so client knows to stop fetching
+                newOffset = int(limit) + int(offset) 
+        else:
+            users = UserProfile.objects.all()
+
+        message['users'] = UserProfile.queryset_to_dict(users)
+        if newOffset:
+            message['next_offset'] = str(newOffset)
+            message['next_limit'] = str(limit)
+
+        return my_response(message,success=True)
+
+
+    reason = "Invalid http method"
+    return my_response(reason=reason,status_code=405)
+
+@check_token
+def user_cards(request,facebook_id):
+    if request.method == HttpTable.get:
+
+        try:
+            user = UserProfile.objects.get(facebook_id=facebook_id)
+        except UserProfile.DoesNotExist:
+            return my_response(status_code=404)
+
+        limit = request.GET.get('limit',None)
+        offset = request.GET.get('offset',None)
+        newOffset = None
+        if limit and offset:
+            offset = int(offset)
+            limit = int(limit)
+            temp_limit = offset + limit
+            cards = user.card.all()[offset:temp_limit]
+            if cards:
+                # only return this if we have data so client knows to stop fetching
+                newOffset = int(limit) + int(offset) 
+        else:
+            cards = user.card.all()
+
+        message = {}
+        message['cards'] = Card.queryset_to_dict(cards)
+        if newOffset:
+            message['next_offset'] = str(newOffset)
+            message['next_limit'] = str(limit)
+
+        return my_response(message,success=True)
+
+    reason = "Only '%s' to this endpoint" % HttpTable.get
+    return my_response(reason=reason,status_code=405)
+
+@check_token
+def view_user(request,facebook_id):
+    if request.method == HttpTable.get:
+        try:
+            user = UserProfile.objects.get(facebook_id=facebook_id)
+        except UserProfile.DoesNotExist:
+            reason = 'user with id %s doesnt exist' % facebook_id
+            return my_response(reason=reason,status_code=404)
+
+        message = {}
+        message['user'] = user.to_dict()
+        return my_response(message,success=True)
+
+    reason = "Only '%s' to this endpoint" % HttpTable.get
+    return my_response(reason=reason,status_code=405)
+
+@check_token
+def update_user(request,facebook_id):
+    if request.method == HttpTable.put:
+        try:
+            user = UserProfile.objects.get(facebook_id=facebook_id)
+        except UserProfile.DoesNotExist:
+            return my_response(status_code=404)
+
+        data = json.loads(request.body,strict=False)
+        for key, value in data.iteritems():
+            setattr(user,key,value)
+        user.save()
+        message = {}
+        message['user'] = user.to_dict()
+        return my_response(message,success=True)
+
+    reason = "Only '%s' to this endpoint" % HttpTable.get
+    return my_response(reason=reason,status_code=405)
+
+@check_token
+def user_object(request,facebook_id):
+    if request.method == HttpTable.get:
+        return view_user(request,facebook_id)
+
+    elif request.method == HttpTable.put:
+        return update_user(request,facebook_id)
+
+    else:
+        reason = "Invalid HTTP method"
+        return my_response(reason=reason,status_code=405)
 
 
 @check_token

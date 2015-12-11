@@ -1,4 +1,10 @@
+Babel==2.1.1
 Django==1.8.4
+django-cumulus===1.0.19-20-g2499ce1
+mock==1.3.0
 Pillow==2.9.0
-djangorestframework==3.2.3
-wsgiref==0.1.2
+pyrax==1.9.5
+requests==2.8.1
+simplejson==3.8.1
+six==1.10.0
+git+https://github.com/dgrtwo/ParsePy.git
