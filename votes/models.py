@@ -1,6 +1,11 @@
+import math
+import uuid
 from django.db import models
 from django.conf import settings
-# Create your models here.
+from datetime import datetime
+from django.utils import timezone
+
+FAKE_IT = getattr(settings,'FAKE_IT',False)
 
 class Base(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -57,7 +62,6 @@ class Card(Base):
     def __unicode__(self):
         return "%s (%s)" % (self.question,self.user)
 
-
     def to_dict(self):
         #self.created.strftime("%Y-%m-%d %H:%M"),
         data = {
@@ -85,13 +89,6 @@ class Card(Base):
 
         return data
 
-    @classmethod
-    def queryset_to_dict(cls,qs):
-        data = []
-        for item in qs:
-            data.append(item.to_dict())
-
-        return data
 
     def get_percentage(self):
         total = self.total_votes()
@@ -102,6 +99,18 @@ class Card(Base):
             left = 0.0
             right = 0.0
 
+        # get left side of decimal point for both numbers
+        leftDecimal = left % 1
+        rightDecimal = right % 1
+
+        # if greater then .5 round it up
+        if leftDecimal >= .5:
+            left = math.ceil(left)
+
+        if rightDecimal >= .5:
+            right = math.ceil(right)
+
+        # int() rounds it down if not even
         data = {
             'left':int(left),
             'right':int(right)
@@ -111,6 +120,15 @@ class Card(Base):
 
     def total_votes(self):
         return self.left_votes_count + self.right_votes_count
+
+
+    @classmethod
+    def queryset_to_dict(cls,qs):
+        data = []
+        for item in qs:
+            data.append(item.to_dict())
+
+        return data
 
     @classmethod
     def send_push_notification(cls,message):
@@ -124,16 +142,77 @@ class Card(Base):
                     "test":"data"},channels=['Choose'])
 
 
+
 class CardList(models.Model):
     """
     Should hold lists like 'featured, daily 12, etc'
     """
     name = models.CharField(max_length=255, blank=False, help_text='Name of Card list')
     cards = models.ManyToManyField(Card)
-    approved = models.BooleanField(default=False)
+    approved = models.BooleanField(default=False,help_text='Only approved items will be shown in the menu of the client')
+    active = models.BooleanField(default=False)
+    last_display = models.DateTimeField(auto_now_add=True)
+    data_changed = models.BooleanField(default=False)
+    uuid = models.UUIDField(default=uuid.uuid4)
 
     def __unicode__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.data_changed:
+            self.new_uuid(save=False)
+            self.data_changed = False
+        return super(CardList, self).save(*args, **kwargs)
+
+    def to_dict(self):
+        data = {
+            'id':self.id,
+            'name':self.name,
+            'approved':self.approved,
+            'last_display':self.last_display,
+            'uuid':self.uuid
+        }
+
+        return data
+
+    def new_uuid(self,save=False):
+        new_uuid = uuid.uuid4().hex
+        if new_uuid != self.uuid:
+            self.uuid = new_uuid
+            if save:
+                self.save()
+
+    @classmethod
+    def queryset_to_dict(cls,qs):
+        data = []
+        for item in qs:
+            data.append(item.to_dict())
+
+        return data
+
+    def now(self):
+        return timezone.localtime(timezone.now())
+
+
+    def hours_since_last(self):
+        now = self.now()
+        difference = now - self.last_display 
+        seconds = float(difference.seconds)
+        minutes = float(seconds/60)
+        return float(minutes/60)
+
+    @classmethod
+    def send_push_notification(cls,message):
+        from parse_rest.connection import register
+        from parse_rest.installation import Push
+
+        register(settings.APPLICATION_ID, settings.REST_API_KEY,master_key=settings.MASTER_KEY)
+
+        Push.alert({"alert":message,
+                    "badge":"Increment",
+                    "test":"data"},channels=['Choose'])
+
+
 
 SHARECHOICES = (
     ('alert','UIAlert'),
@@ -153,7 +232,7 @@ class ShareText(Base):
         return "%s" % self.message
 
     def save(self, *args, **kwargs):
-        Card.send_push_notification(self.message)
+        #Card.send_push_notification(self.message)
         return super(ShareText, self).save(*args, **kwargs)
 
 

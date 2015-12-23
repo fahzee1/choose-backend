@@ -6,11 +6,12 @@ from django.conf import settings
 from django.core.files.base import ContentFile
 from django.db.models import F
 from django.shortcuts import render
-from models import Card, ShareText
+from models import Card, ShareText, CardList
 from users.models import UserProfile
 from django.http import JsonResponse
 from django.utils.decorators import decorator_from_middleware_with_args, decorator_from_middleware
 from users.middleware import TokenCheck
+from django.views.decorators.cache import cache_page
 
 check_token = decorator_from_middleware(TokenCheck)
 
@@ -50,44 +51,59 @@ def my_response(data={},success=False,reason='Failed request',status_code=200):
     response.status_code = status_code
     return response
 
-
-
+#cache for 1 hour
+@cache_page(60*60,key_prefix='choose')
 @check_token
 def show_cards(request):
-    """
-    statuc code...
-
-    200 = everything is normal should have cards to show
-    230 = no cards are created
-    231 = stop fetching no more items in DB
-    """
-
     message = {'success':False}
     status_code = 200
     http_method = HttpTable.get
     query = request.GET.get('q',None)
-    if query == 'featured':
-        featured = True
-    else:
-        featured = False
-
+    uuid = request.GET.get('uuid',None)
+    # Only get requests
     if request.method == http_method:
+        #get limit and offset from client if there
         limit = request.GET.get('limit',None)
         offset = request.GET.get('offset',None)
         newOffset = None
         if limit and offset:
+            #if we have limi and offset convert them to ints
             offset = int(offset)
             limit = int(limit)
             temp_limit = offset + limit
+            # try getting cards
+            try:
+                category = CardList.objects.select_related().get(name=query)
+                # check for uuid to see if we need to return new data or nothing
+                if uuid:
+                    if uuid == str(category.uuid):
+                        reason = "No new data for this category"
+                        return my_response(reason=reason,status_code=222)
 
-            all_cards = Card.objects.select_related().filter(featured=featured)[offset:temp_limit]
-            if all_cards:
-                # only return this if we have data so client knows to stop fetching
-                newOffset = int(limit) + int(offset) 
+                all_cards = category.cards.all()[offset:temp_limit]
+                if all_cards:
+                    # only return this if we have data so client knows to stop fetching
+                    newOffset = int(limit) + int(offset)
+            except CardList.DoesNotExist:
+                reason = "CardList object does not exist"
+                return my_response(reason=reason,status_code=400) 
         else:
-            all_cards = Card.objects.select_related().filter(featured=featured)[:50]
+            # if no limit or offset just return the last 100 objects max
+            try:
+                category = CardList.objects.select_related().get(name=query)
+                # check for uuid to see if we need to return new data or nothing
+                if uuid:
+                    if uuid == str(category.uuid):
+                        reason = "No new data for this category"
+                        return my_response(reason=reason,status_code=222)
 
-        message['cards'] = Card.queryset_to_dict(all_cards)
+                all_cards = category.cards.all()[:100]
+            except CardList.DoesNotExist:
+                reason = "CardList object does not exist"
+                return my_response(reason=reason,status_code=400)
+
+        message['cards'] = CardList.queryset_to_dict(all_cards)
+        message['uuid'] = category.uuid
         if newOffset:
             message['next_offset'] = str(newOffset)
             message['next_limit'] = str(limit)
@@ -266,6 +282,18 @@ def share_text(request):
     message = {}
     if request.method == HttpTable.get:
         message['share_text'] = ShareText.get_lastest_share_text()
+        return my_response(message,success=True)
+
+    reason = "Only '%s' to this endpoint" % HttpTable.get
+    return my_response(reason=reason,status_code=405)
+
+
+@check_token
+def lists(request):
+    message = {}
+    if request.method == HttpTable.get:
+        lists = CardList.objects.filter(approved=True)
+        message['lists'] = CardList.queryset_to_dict(lists)
         return my_response(message,success=True)
 
     reason = "Only '%s' to this endpoint" % HttpTable.get

@@ -92,13 +92,21 @@ DATABASES = {
     }
 }
 
+"""
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+"""
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Eastern'
 
 USE_I18N = True
 
@@ -135,6 +143,8 @@ DEFAULT_FILE_STORAGE = 'cumulus.storage.CumulusStorage'
 QUESTION_TYPE_A_B = 100
 QUESTION_TYPE_YES_NO = 101
 
+# Fake users, fake votes, fake notifications
+FAKE_IT = True
 
 #Parse api settings
 APPLICATION_ID = "Jnloet4uKj9z5hJOaVdiIKRRrOzLCUf1COzse16Z"

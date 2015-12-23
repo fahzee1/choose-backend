@@ -1,8 +1,10 @@
 import pdb
 import json
+import traceback
 from django.shortcuts import render
 from django.views.generic import View
 from votes.views import my_response
+from django.db import IntegrityError
 from votes.models import Card
 from models import UserProfile, Token
 from django.shortcuts import get_object_or_404
@@ -68,8 +70,16 @@ def login(request):
         email = data.get('email',None)
         fbID = data.get('facebook_id',None)
         name = name.replace(' ','_')
-        user, created = UserProfile.objects.get_or_create(username=name,
-                                                          facebook_id=fbID)
+        try:
+            user, created = UserProfile.objects.get_or_create(username=name,
+                                                          facebook_id=fbID,
+                                                          email=email)
+        except IntegrityError:
+            traceback.print_exc()
+            reason = 'There was an IntegrityError creating user -- %s' % traceback.format_exc()
+            return my_response(reason=reason,status_code=500)
+
+
 
         # Return data
         message['user'] = user.to_dict(token=True) 

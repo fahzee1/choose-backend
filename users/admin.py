@@ -57,7 +57,7 @@ class UserProfileAdmin(UserAdmin):
     list_filter = ('username',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('username','first_name','last_name','gender','location')}),
+        ('Personal info', {'fields': ('facebook_image','username','first_name','last_name','gender','location')}),
         ('Social',{'fields':('score','facebook_user','facebook_id')}),
         ('Permissions', {'fields': ('is_admin','is_superuser')}),
         ('Important dates', {'fields': ('last_login',)}),
@@ -73,7 +73,7 @@ class UserProfileAdmin(UserAdmin):
     )
     search_fields = ('email','username')
     ordering = ('email',)
-    filter_horizontal = ()
+    readonly_fields = ('facebook_image',)
 
 # Register your models here.
 admin.site.register(UserProfile, UserProfileAdmin)

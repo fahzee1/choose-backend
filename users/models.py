@@ -1,6 +1,7 @@
 import uuid
 import binascii
 import os
+import pdb
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_save
@@ -55,6 +56,7 @@ class MyUserManager(BaseUserManager):
             date_of_birth=date_of_birth
         )
         user.is_admin = True
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
@@ -159,6 +161,11 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+    def facebook_image(self):
+        return u'<img src="http://graph.facebook.com/%s/picture?type=large" height="100" width="100"' % self.facebook_id
+
+    facebook_image.allow_tags = True
 
 
 
