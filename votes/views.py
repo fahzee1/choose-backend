@@ -52,7 +52,7 @@ def my_response(data={},success=False,reason='Failed request',status_code=200):
     return response
 
 #cache for 1 hour
-@cache_page(60*60,key_prefix='choose')
+#@cache_page(60*60,key_prefix='choose')
 @check_token
 def show_cards(request):
     message = {'success':False}
@@ -223,7 +223,8 @@ def create_card(request):
 
         try:
             user = UserProfile.objects.get(facebook_id=facebook_id)
-
+        except UserProfile.MultipleObjectsReturned:
+            user = UserProfile.objects.filter(facebook_id=facebook_id)[0]
         except UserProfile.DoesNotExist:
             reason = 'fb id:%s user doesnt exist' % facebook_id
             return my_response(reason=reason,status_code=404)

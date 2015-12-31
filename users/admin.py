@@ -1,9 +1,11 @@
+import traceback
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from users.models import UserProfile, Token
+from random import randrange
 
 
 class UserCreationForm(forms.ModelForm):
@@ -74,6 +76,30 @@ class UserProfileAdmin(UserAdmin):
     search_fields = ('email','username')
     ordering = ('email',)
     readonly_fields = ('facebook_image',)
+    actions = ['format_username']
+
+    def format_username(self,request,queryset):
+        for i in queryset:
+            name = i.username
+            if len(name.split(' ')) == 2:
+                first, last = name.split(' ')
+                first = first.capitalize()
+                last = last.capitalize()
+                name = first + ' ' + last
+            elif len(name.split(' ')) == 1:
+                name = name.capitalize()
+
+            else:
+                name = 'Rename user %s' % randrange(0,5000)
+
+            i.username = name
+            try:
+                i.save()
+            except:
+                traceback.print_exc()
+
+        self.message_user(request,'Succesfully formated %s usernames' % queryset.count())
+    format_username.short_description = 'Capitalize usernames'
 
 # Register your models here.
 admin.site.register(UserProfile, UserProfileAdmin)

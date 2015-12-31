@@ -65,6 +65,7 @@ class CardListAdmin(admin.ModelAdmin):
       self.message_user(request,'Succesfully changed %s uuids' % queryset.count())
     new_uuid_action.short_description = 'Create new uuid for selected card lists'
 
+
     #raw_id_fields = ('cards',)
 
 admin.site.register(Tag)

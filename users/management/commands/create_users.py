@@ -1,8 +1,11 @@
 import csv
 import sys
+import os
 import pdb
 from optparse import make_option
 import traceback
+from django.db import IntegrityError
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from users.models import UserProfile
 
@@ -25,13 +28,18 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         app = lambda : None
         app.options = options
+
+        """
         if not options['csv_file']:
             raise CommandError('Need csv file to feed')
+        """
+
 
         if not options['count']:
             raise CommandError('Need count to feed')
-        
-        get_csv_data(app,options['csv_file'],options['count'])
+
+        file_path = "%s/data/fake_users.csv" % settings.BASE_DIR
+        get_csv_data(app,file_path,options['count'])
             
 
 
@@ -50,9 +58,10 @@ def get_csv_data(app,_file,count):
             name = info.get('Name','')
             email = info.get('Email','')
             phone = info.get('Phone','')
-
-
-            name = name.replace(' ','_')
+            
+            if not email:
+                email = '%s@aol.com' % id_start
+            #name = name.replace(' ','_')
 
             if i == int(count):
                 print 'done.. created %s' % i
@@ -64,10 +73,10 @@ def get_csv_data(app,_file,count):
                 user.facebook_user = True
                 user.fake_user = True
                 user.facebook_id = id_start
+                user.email = email
                 user.save()
-            except:
-                traceback.print_exc()
-                print 'already created %s' % name
+            except IntegrityError:
+                print 'IntegrityError'
 
             id_start += 1
             

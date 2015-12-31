@@ -122,11 +122,14 @@ def users(request):
 @check_token
 def user_cards(request,facebook_id):
     if request.method == HttpTable.get:
-
         try:
             user = UserProfile.objects.get(facebook_id=facebook_id)
+        except UserProfile.MultipleObjectsReturned:
+            user = UserProfile.objects.filter(facebook_id=facebook_id)[0]
         except UserProfile.DoesNotExist:
             return my_response(status_code=404)
+
+
 
         limit = request.GET.get('limit',None)
         offset = request.GET.get('offset',None)
@@ -158,6 +161,8 @@ def view_user(request,facebook_id):
     if request.method == HttpTable.get:
         try:
             user = UserProfile.objects.get(facebook_id=facebook_id)
+        except UserProfile.MultipleObjectsReturned:
+            user = UserProfile.objects.filter(facebook_id=facebook_id)[0]
         except UserProfile.DoesNotExist:
             reason = 'user with id %s doesnt exist' % facebook_id
             return my_response(reason=reason,status_code=404)
@@ -174,6 +179,8 @@ def update_user(request,facebook_id):
     if request.method == HttpTable.put:
         try:
             user = UserProfile.objects.get(facebook_id=facebook_id)
+        except UserProfile.MultipleObjectsReturned:
+            user = UserProfile.objects.filter(facebook_id=facebook_id)[0]
         except UserProfile.DoesNotExist:
             return my_response(status_code=404)
 
