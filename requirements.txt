@@ -1,6 +1,6 @@
 Babel==2.1.1
 Django==1.8.4
-django-cumulus===1.0.19-20-g2499ce1
+django-cumulus==1.0.19-20-g2499ce1
 mock==1.3.0
 Pillow==2.9.0
 pyrax==1.9.5
