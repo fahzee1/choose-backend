@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '5n076m!!(kjy3#q@-ub9)t!e+gye0%sj$zb274=uran18%7mg3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.200.187:8000',]
+ALLOWED_HOSTS = ['192.168.200.187:8000','162.243.170.41']
 
 
 # Application definition
@@ -122,7 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/cjogbuehi/virtualenvs/apps/static/'
+STATIC_ROOT = '/home/cjogbuehi/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
