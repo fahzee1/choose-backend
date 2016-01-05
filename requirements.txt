@@ -9,3 +9,4 @@ simplejson==3.8.1
 six==1.10.0
 git+https://github.com/dgrtwo/ParsePy.git
 gevent==1.0.2
+python-memcached==1.57
