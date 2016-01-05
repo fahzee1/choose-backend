@@ -81,6 +81,9 @@ class UserProfileAdmin(UserAdmin):
     def format_username(self,request,queryset):
         for i in queryset:
             name = i.username
+            if name == 'cjogbuehi':
+                continue
+                
             if len(name.split(' ')) == 2:
                 first, last = name.split(' ')
                 first = first.capitalize()

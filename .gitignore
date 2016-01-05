@@ -1,3 +1,5 @@
 *.pyc
 local_settings.py
 /media
+db3.sqlite3
+/db
