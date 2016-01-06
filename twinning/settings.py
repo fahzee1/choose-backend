@@ -25,7 +25,7 @@ SECRET_KEY = '5n076m!!(kjy3#q@-ub9)t!e+gye0%sj$zb274=uran18%7mg3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['192.168.200.187:8000','162.243.170.41','api.trychoose.com']
+ALLOWED_HOSTS = ['192.168.200.187:8000','162.243.170.41','api.trychoose.com','www.api.trychoose.com']
 
 
 # Application definition
