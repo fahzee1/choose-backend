@@ -167,6 +167,17 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
 
     facebook_image.allow_tags = True
 
+    @classmethod
+    def create_staff_user(cls,username,password,email=None,superuser=False):
+        user = cls(username=username,
+                   email=email)
+        user.is_admin = True
+        user.is_superuser = superuser
+        user.is_staff = True
+        user.save()
+
+
+
 
 
 class UpperUserProfile(UserProfile):

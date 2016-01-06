@@ -66,7 +66,7 @@ ROOT_URLCONF = 'twinning.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR + '/twinning/templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,6 +126,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/home/cjogbuehi/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
 AUTH_USER_MODEL = 'users.UserProfile'
 

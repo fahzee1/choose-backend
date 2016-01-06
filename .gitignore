@@ -3,3 +3,4 @@ local_settings.py
 /media
 db3.sqlite3
 /db
+.DS_Store
