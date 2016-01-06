@@ -40,7 +40,7 @@ class UserChangeForm(forms.ModelForm):
     the user, but replaces the password field with admin's
     password hash display field.
     """
-    password = ReadOnlyPasswordHashField()
+    password = ReadOnlyPasswordHashField(label=('Password'),help_text= ("Raw passwords are not stored, change password using <a href=\"password/\">this form</a>."))
 
     class Meta:
         model = UserProfile
@@ -78,12 +78,16 @@ class UserProfileAdmin(UserAdmin):
     readonly_fields = ('facebook_image',)
     actions = ['format_username']
 
+    def login(self):
+        import pdb
+        pdb.set_trace
+
     def format_username(self,request,queryset):
         for i in queryset:
             name = i.username
             if name == 'cjogbuehi':
                 continue
-                
+
             if len(name.split(' ')) == 2:
                 first, last = name.split(' ')
                 first = first.capitalize()
