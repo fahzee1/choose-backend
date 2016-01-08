@@ -78,10 +78,6 @@ class UserProfileAdmin(UserAdmin):
     readonly_fields = ('facebook_image',)
     actions = ['format_username']
 
-    def login(self):
-        import pdb
-        pdb.set_trace
-
     def format_username(self,request,queryset):
         for i in queryset:
             name = i.username

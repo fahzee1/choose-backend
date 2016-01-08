@@ -10,6 +10,7 @@ from models import UserProfile, Token
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import decorator_from_middleware_with_args, decorator_from_middleware
 from middleware import TokenCheck
+from django.views.decorators.cache import cache_page
 
 check_token = decorator_from_middleware(TokenCheck)
 """
@@ -29,6 +30,7 @@ class HttpTable(object):
     put = 'PUT'
     delete = 'DELETE'
 
+@cache_page(60*10)
 @check_token
 def get_me(request):
     message = {'success':False}
@@ -71,15 +73,15 @@ def login(request):
         fbID = data.get('facebook_id',None)
         name = name.replace(' ','_')
         try:
-            user, created = UserProfile.objects.get_or_create(username=name,
-                                                          facebook_id=fbID,
-                                                          email=email)
+            user, created = UserProfile.objects.get_or_create(username=name)
+            if created:
+                user.facebook_id = fbID
+                user.email = email
+                user.save()
         except IntegrityError:
             traceback.print_exc()
             reason = 'There was an IntegrityError creating user -- %s' % traceback.format_exc()
             return my_response(reason=reason,status_code=500)
-
-
 
         # Return data
         message['user'] = user.to_dict(token=True) 
@@ -90,6 +92,7 @@ def login(request):
     reason = "Only 'POST' to this endpoint"
     return my_response(reason=reason,status_code=405)
 
+@cache_page(60*10)
 @check_token
 def users(request):
     message = {}
@@ -119,6 +122,7 @@ def users(request):
     reason = "Invalid http method"
     return my_response(reason=reason,status_code=405)
 
+@cache_page(60*3)
 @check_token
 def user_cards(request,facebook_id):
     if request.method == HttpTable.get:
@@ -156,6 +160,8 @@ def user_cards(request,facebook_id):
     reason = "Only '%s' to this endpoint" % HttpTable.get
     return my_response(reason=reason,status_code=405)
 
+
+@cache_page(60*10)
 @check_token
 def view_user(request,facebook_id):
     if request.method == HttpTable.get:

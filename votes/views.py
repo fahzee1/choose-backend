@@ -12,6 +12,8 @@ from django.http import JsonResponse
 from django.utils.decorators import decorator_from_middleware_with_args, decorator_from_middleware
 from users.middleware import TokenCheck
 from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+
 
 check_token = decorator_from_middleware(TokenCheck)
 
@@ -51,8 +53,17 @@ def my_response(data={},success=False,reason='Failed request',status_code=200):
     response.status_code = status_code
     return response
 
+
+def get_cached_cards(request):
+    return cache.get(request.path)
+
+def cache_cards_page(request,data,expires=60*60):
+    cache.set(request.path,data,expires)
+
+
+
+
 #cache for 1 hour
-#@cache_page(60*60,key_prefix='choose')
 @check_token
 def show_cards(request):
     message = {'success':False}
@@ -60,6 +71,19 @@ def show_cards(request):
     http_method = HttpTable.get
     query = request.GET.get('q',None)
     uuid = request.GET.get('uuid',None)
+
+    # first check cache
+    """
+    cached_cards = get_cached_cards(request)
+    if cached_cards:
+        if str(cached_cards['uuid']) == uuid:
+            reason = "No new data for this category"
+            return my_response(reason=reason,status_code=222)
+        return my_response(cached_cards,success=True)
+    """
+
+
+
     # Only get requests
     if request.method == http_method:
         #get limit and offset from client if there
@@ -102,8 +126,10 @@ def show_cards(request):
                 reason = "CardList object does not exist"
                 return my_response(reason=reason,status_code=400)
 
-        message['cards'] = CardList.queryset_to_dict(all_cards)
-        message['uuid'] = category.uuid
+        cards = CardList.queryset_to_dict(all_cards)
+        message['cards'] = cards
+        message['uuid'] = str(category.uuid)
+        cache_cards_page(request,message,60*60)
         if newOffset:
             message['next_offset'] = str(newOffset)
             message['next_limit'] = str(limit)
@@ -134,6 +160,7 @@ def update_card(request,id):
     reason = "Only '%s' to this endpoint" % http_method
     return my_response(reason=reason,status_code=405)
 
+@cache_page(60*10)
 @check_token
 def view_card(request,id):
     message = {}
@@ -218,16 +245,33 @@ def create_card(request):
         imageData = data['image']
         question = data['question']
         question_type = data['question_type']
+        creator_name = data.get('creator_name',None)
+
         if question_type != settings.QUESTION_TYPE_A_B and question_type != settings.QUESTION_TYPE_YES_NO:
             return my_response(reason='Not valid question type. 100 or 101',status_code=400)
 
-        try:
-            user = UserProfile.objects.get(facebook_id=facebook_id)
-        except UserProfile.MultipleObjectsReturned:
-            user = UserProfile.objects.filter(facebook_id=facebook_id)[0]
-        except UserProfile.DoesNotExist:
-            reason = 'fb id:%s user doesnt exist' % facebook_id
-            return my_response(reason=reason,status_code=404)
+        
+
+        #see if we need to get or create fake user first
+        if creator_name:
+            user, created = UserProfile.objects.get_or_create(username=creator_name)
+            if created:
+                # get last user's facebook id and increment it to add to fake user
+                last_user = UserProfile.objects.last()
+                last_id = long(last_user.facebook_id)
+                last_id += 1
+                user.facebook_id = last_id
+                user.fake_user = True
+                user.save()
+
+        if not user:
+            try:
+                user = UserProfile.objects.get(facebook_id=facebook_id)
+            except UserProfile.MultipleObjectsReturned:
+                user = UserProfile.objects.filter(facebook_id=facebook_id)[0]
+            except UserProfile.DoesNotExist:
+                reason = 'fb id:%s user doesnt exist' % facebook_id
+                return my_response(reason=reason,status_code=404)
 
         
         image = base64.b64decode(imageData)

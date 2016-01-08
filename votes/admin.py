@@ -1,10 +1,11 @@
 from django.contrib import admin
 from models import Tag, Card, ShareText, CardList
+import random
 # Register your models here.
 
 
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('question','string_question_type','image_link','id')
+    list_display = ('question','string_question_type','image_link','id','user')
     list_display_links = ('question',)
     list_filter = ('question','user__username')
     search_fields = ('question','user__username')
@@ -19,7 +20,7 @@ class CardAdmin(admin.ModelAdmin):
               'featured',
               'tags')
     readonly_fields = ('image_link','image_url')
-    radio_fields = {'user':admin.HORIZONTAL}
+    actions = ['set_random_user']
 
     def save_model(self,request,obj,form,change):
         if not obj.image_url:
@@ -42,6 +43,21 @@ class CardAdmin(admin.ModelAdmin):
         return 'A/B'
       else:
         return 'Impropery configured'
+
+    def set_random_user(self,request,queryset):
+        for i in queryset:
+            random_user = self.get_my_random_object(i.user.__class__)
+            i.user = random_user
+            i.save()
+        self.message_user(request,'Succesfully changed %s cards with new names' % queryset.count())
+
+    set_random_user.short_description = 'Add random user to selected cards'
+
+    def get_my_random_object(self,model):
+        theObject = random.choice(model.objects.all())
+        return theObject
+
+
 
 
 

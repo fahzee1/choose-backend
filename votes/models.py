@@ -131,15 +131,16 @@ class Card(Base):
         return data
 
     @classmethod
-    def send_push_notification(cls,message):
+    def send_push_notification(cls,message,data={}):
         from parse_rest.connection import register
         from parse_rest.installation import Push
 
         register(settings.APPLICATION_ID, settings.REST_API_KEY,master_key=settings.MASTER_KEY)
 
-        Push.alert({"alert":message,
-                    "badge":"Increment",
-                    "test":"data"},channels=['Choose'])
+        data['alert'] = message
+        data['badge'] = "Increment"
+
+        Push.alert(data,channels=['Choose'])
 
 
 
@@ -202,15 +203,16 @@ class CardList(models.Model):
         return float(minutes/60)
 
     @classmethod
-    def send_push_notification(cls,message):
+    def send_push_notification(cls,message,data={}):
         from parse_rest.connection import register
         from parse_rest.installation import Push
 
         register(settings.APPLICATION_ID, settings.REST_API_KEY,master_key=settings.MASTER_KEY)
 
-        Push.alert({"alert":message,
-                    "badge":"Increment",
-                    "test":"data"},channels=['Choose'])
+        data['alert'] = message
+        data['badge'] = "Increment"
+
+        Push.alert(data,channels=['Choose'])
 
 
 
@@ -232,7 +234,7 @@ class ShareText(Base):
         return "%s" % self.message
 
     def save(self, *args, **kwargs):
-        #Card.send_push_notification(self.message)
+        Card.send_push_notification(self.message,{'id':1171,'name':'king jolly'})
         return super(ShareText, self).save(*args, **kwargs)
 
 

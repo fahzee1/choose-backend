@@ -124,6 +124,7 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
         data['email'] = self.email
         data['facebook_id'] = self.facebook_id
         data['location'] = self.location
+        data['is_staff'] = self.is_staff
 
         if self.gender:
             data['gender'] = self.gender

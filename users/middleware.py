@@ -15,8 +15,9 @@ class TokenCheck(object):
             response.status_code = 403
             return response
 
-        token = Token.objects.filter(key=token)
-        if not token:
+        if not Token.objects.filter(key=token).exists():
+            if token == 'anonymous':
+                return None
             response = JsonResponse(message)
             response.status_code=403
             return response
