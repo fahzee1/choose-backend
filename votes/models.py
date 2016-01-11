@@ -163,6 +163,7 @@ class CardList(models.Model):
         if self.data_changed:
             self.new_uuid(save=False)
             self.data_changed = False
+
         return super(CardList, self).save(*args, **kwargs)
 
     def to_dict(self):
@@ -216,6 +217,39 @@ class CardList(models.Model):
 
 
 
+class Choose(Base):
+    message = models.CharField(default='Your cards are ready for the day!',max_length=255,blank=False)
+    lists = models.ManyToManyField(CardList,related_name='choose')
+    ready = models.BooleanField(default=True)
+    last_update = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return "%s" % self.message
+
+    def now(self):
+        return timezone.localtime(timezone.now())
+
+    def update_date(self):
+        self.last_update = self.now()
+        self.save()
+
+    def send_notification(self,message=None,data={}):
+        from parse_rest.connection import register
+        from parse_rest.installation import Push
+
+        register(settings.APPLICATION_ID, settings.REST_API_KEY,master_key=settings.MASTER_KEY)
+
+        if not message:
+            message = "%s %s new lists for you to checkout" % (self.message,self.lists.count())
+
+        data['alert'] = message
+        data['badge'] = "Increment"
+
+        Push.alert(data,channels=['Choose'])
+
+
+
+
 SHARECHOICES = (
     ('alert','UIAlert'),
     ('popup','UIPopup'),
@@ -248,6 +282,9 @@ class ShareText(Base):
             'display':obj.display,
         }
         return data
+
+
+
 
 
 

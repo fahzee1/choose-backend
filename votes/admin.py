@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Tag, Card, ShareText, CardList
+from models import Tag, Card, ShareText, CardList,Choose
 import random
 # Register your models here.
 
@@ -88,4 +88,5 @@ admin.site.register(Tag)
 admin.site.register(Card,CardAdmin)
 admin.site.register(CardList,CardListAdmin)
 admin.site.register(ShareText)
+admin.site.register(Choose)
 admin.site.empty_value_display = 'Nothing here'

@@ -80,7 +80,7 @@ def show_cards(request):
             reason = "No new data for this category"
             return my_response(reason=reason,status_code=222)
         return my_response(cached_cards,success=True)
-    """
+    """ 
 
 
 
