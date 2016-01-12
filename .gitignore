@@ -4,3 +4,4 @@ local_settings.py
 db3.sqlite3
 /db
 .DS_Store
+newrelic.ini
