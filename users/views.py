@@ -32,7 +32,6 @@ class HttpTable(object):
     put = 'PUT'
     delete = 'DELETE'
 
-@cache_page(60*10)
 @check_token
 def get_me(request):
     message = {'success':False}
