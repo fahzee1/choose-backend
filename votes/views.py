@@ -264,7 +264,7 @@ def create_card(request):
             return my_response(reason='Not valid question type. 100 or 101',status_code=400)
 
         
-
+        user = None
         #see if we need to get or create fake user first
         if creator_name:
             logger.debug('creating fake user')
