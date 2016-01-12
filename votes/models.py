@@ -301,12 +301,13 @@ class ShareText(Base):
     @classmethod
     def get_lastest_share_text(cls):
         obj = cls.objects.last()
-        data = {
-            'id':obj.id,
-            'message':obj.message,
-            'display':obj.display,
-        }
-        return data
+        if obj:
+            data = {
+                'id':obj.id,
+                'message':obj.message,
+                'display':obj.display,
+            }
+            return data
 
 
 

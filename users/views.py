@@ -74,7 +74,6 @@ def login(request):
         name = data.get('name',None)
         email = data.get('email',None)
         fbID = data.get('facebook_id',None)
-        name = name.replace(' ','_')
         try:
             logger.debug('creating %s'% name)
             user, created = UserProfile.objects.get_or_create(username=name)
