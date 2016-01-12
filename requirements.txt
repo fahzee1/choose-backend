@@ -1,7 +1,7 @@
 Babel==2.1.1
 debtcollector==1.0.0
 Django==1.8.4
-django-cumulus==1.0.19
+git+git://github.com/django-cumulus/django-cumulus.git@master
 ip-associations-python-novaclient-ext==0.1
 iso8601==0.1.11
 keyring==5.6

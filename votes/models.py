@@ -292,11 +292,6 @@ class ShareText(Base):
     def __unicode__(self):
         return "%s" % self.message
 
-    def save(self, *args, **kwargs):
-        Card.send_push_notification(self.message,{'id':1171,'name':'king jolly'})
-        return super(ShareText, self).save(*args, **kwargs)
-
-
 
     @classmethod
     def get_lastest_share_text(cls):
