@@ -19,10 +19,12 @@ from django.contrib import admin
 from users import urls as user_urls
 from votes import urls as vote_urls
 from django.views.generic import TemplateView
+import views
 
 admin.site.site_header = 'Choose Admin'
 
 urlpatterns = [
+    url(r'^$', views.home,name='home'),
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^api/', include(user_urls)),
