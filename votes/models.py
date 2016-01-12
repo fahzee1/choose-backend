@@ -61,6 +61,8 @@ class Card(Base):
     facebook_shared = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)
     branch_link = models.CharField(max_length=255,blank=True)
+    fake_notification_count = models.IntegerField(default=0,help_text='This is the amount of times we sent fake notifications')
+    fake_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['-created']
@@ -177,7 +179,7 @@ class CardList(models.Model):
     Should hold lists like 'featured, daily 12, etc'
     """
     name = models.CharField(max_length=255, blank=False, help_text='Name of Card list')
-    cards = models.ManyToManyField(Card)
+    cards = models.ManyToManyField(Card,related_name='lists')
     approved = models.BooleanField(default=False,help_text='Only approved items will be shown in the menu of the client')
     active = models.BooleanField(default=False)
     last_display = models.DateTimeField(auto_now_add=True)

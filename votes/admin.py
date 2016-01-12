@@ -19,7 +19,8 @@ class CardAdmin(admin.ModelAdmin):
               ('left_votes_fake','right_votes_fake'),
               'branch_link',
               'featured',
-              'tags')
+              'tags',
+              ('fake_active','fake_notification_count'))
     readonly_fields = ('image_link','image_url','branch_link')
     actions = ['set_random_user','set_random_votes']
 
