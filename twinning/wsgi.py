@@ -15,6 +15,6 @@ application = get_wsgi_application()
 
 try:
     import newrelic.agent
-    newrelic.agent.initialize('/virtualenvs/choose/twinning/newrelic.ini')
+    newrelic.agent.initialize('/home/cjogbuehi/virtualenvs/choose/twinning/newrelic.ini')
 except ImportError:
     pass
