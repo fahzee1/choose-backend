@@ -16,17 +16,18 @@ class CardAdmin(admin.ModelAdmin):
               'question',
               'question_type',
               ('left_votes_count','right_votes_count'),
+              ('left_votes_fake','right_votes_fake'),
               'branch_link',
               'featured',
               'tags')
-    readonly_fields = ('image_link','image_url')
-    actions = ['set_random_user']
+    readonly_fields = ('image_link','image_url','branch_link')
+    actions = ['set_random_user','set_random_votes']
 
     def save_model(self,request,obj,form,change):
         if not obj.image_url:
             if obj.image:
                 obj.image_url = obj.image.url
-                obj.save()
+        obj.save()
 
     def delete_model(request,obj):
         obj.image.delete()
@@ -57,6 +58,12 @@ class CardAdmin(admin.ModelAdmin):
         theObject = random.choice(model.objects.all())
         return theObject
 
+    def set_random_votes(self,request,queryset):
+        for i in queryset:
+            i.fake_votes()
+        self.message_user(request,'Succesfully changed %s cards with random votes' % queryset.count())
+
+    set_random_votes.short_description = 'Add fake votes to selected cards'
 
 
 

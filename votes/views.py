@@ -2,6 +2,7 @@ import pdb
 import uuid
 import json
 import base64
+import logging
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.db.models import F
@@ -13,9 +14,10 @@ from django.utils.decorators import decorator_from_middleware_with_args, decorat
 from users.middleware import TokenCheck
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
-
+import urllib2
 
 check_token = decorator_from_middleware(TokenCheck)
+logger = logging.getLogger(__name__)
 
 """
 Token authentication must be in the form
@@ -55,10 +57,21 @@ def my_response(data={},success=False,reason='Failed request',status_code=200):
 
 
 def get_cached_cards(request):
-    return cache.get(request.path)
+    query = request.GET.get('q',None)
+    query = query.replace(' ','-')
+    if query:
+        cards = cache.get(query)
+        if cards < 1:
+            cache.delete(query)
+            return
+        else:
+            return cards
 
 def cache_cards_page(request,data,expires=60*60):
-    cache.set(request.path,data,expires)
+    query = request.GET.get('q',None)
+    query = query.replace(' ','-')
+    if query:
+        cache.set(query,data,expires)
 
 
 
@@ -73,14 +86,12 @@ def show_cards(request):
     uuid = request.GET.get('uuid',None)
 
     # first check cache
-    """
     cached_cards = get_cached_cards(request)
     if cached_cards:
         if str(cached_cards['uuid']) == uuid:
             reason = "No new data for this category"
             return my_response(reason=reason,status_code=222)
         return my_response(cached_cards,success=True)
-    """ 
 
 
 
@@ -129,7 +140,7 @@ def show_cards(request):
         cards = CardList.queryset_to_dict(all_cards)
         message['cards'] = cards
         message['uuid'] = str(category.uuid)
-        cache_cards_page(request,message,60*60)
+        cache_cards_page(request,message,60*10)
         if newOffset:
             message['next_offset'] = str(newOffset)
             message['next_limit'] = str(limit)
@@ -236,6 +247,7 @@ def create_card(request):
         for name in params:
             if name not in data.keys():
                 message['reason'] = 'Missing %s param' % name
+                logger.debug(message['reason'])
                 response = JsonResponse(message)
                 response.status_code = 400
                 return response
@@ -248,21 +260,24 @@ def create_card(request):
         creator_name = data.get('creator_name',None)
 
         if question_type != settings.QUESTION_TYPE_A_B and question_type != settings.QUESTION_TYPE_YES_NO:
+            logger.debug('Not a valid questin type when creating card')
             return my_response(reason='Not valid question type. 100 or 101',status_code=400)
 
         
 
         #see if we need to get or create fake user first
         if creator_name:
+            logger.debug('creating fake user')
             user, created = UserProfile.objects.get_or_create(username=creator_name)
             if created:
                 # get last user's facebook id and increment it to add to fake user
                 last_user = UserProfile.objects.last()
-                last_id = long(last_user.facebook_id)
-                last_id += 1
+                last_id = last_user.id * 100
                 user.facebook_id = last_id
                 user.fake_user = True
+                user.email = "%s@aol.com" % last_id
                 user.save()
+                logger.debug('new fake user created %s' % name)
 
         if not user:
             try:
@@ -282,6 +297,7 @@ def create_card(request):
         card.question = question
         card.question_type = question_type
         card.image.save(imagename,ContentFile(image))
+        card.fake_votes(save=False,notify=False)
         card.save()
         message['card'] = card.to_dict();
         return my_response(message,success=True,status_code=201)

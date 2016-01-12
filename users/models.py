@@ -76,11 +76,7 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
     device_token = models.CharField(default="",max_length=255, blank=True)
     send_notifications = models.BooleanField(default=True)
     fake_user = models.BooleanField(default=False)
-    email = models.EmailField(
-        verbose_name='email address',
-        max_length=255,
-        unique=True,
-    )
+    email = models.EmailField(verbose_name='email address',max_length=255,blank=True)
     date_of_birth = models.DateField(null=True,blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

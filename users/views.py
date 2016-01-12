@@ -1,5 +1,6 @@
 import pdb
 import json
+import logging
 import traceback
 from django.shortcuts import render
 from django.views.generic import View
@@ -13,6 +14,7 @@ from middleware import TokenCheck
 from django.views.decorators.cache import cache_page
 
 check_token = decorator_from_middleware(TokenCheck)
+logger = logging.getLogger(__name__)
 """
 Token authentication must be in the form
 
@@ -65,6 +67,7 @@ def login(request):
         for name in params:
             if name not in data.keys():
                 reason = 'Missing %s param' % name
+                logger.debug(reason)
                 return my_response(reason=reason,status_code=400)
 
 
@@ -73,6 +76,7 @@ def login(request):
         fbID = data.get('facebook_id',None)
         name = name.replace(' ','_')
         try:
+            logger.debug('creating %s'% name)
             user, created = UserProfile.objects.get_or_create(username=name)
             if created:
                 user.facebook_id = fbID
@@ -80,6 +84,7 @@ def login(request):
                 user.save()
         except IntegrityError:
             traceback.print_exc()
+            logger(traceback.print_exc())
             reason = 'There was an IntegrityError creating user -- %s' % traceback.format_exc()
             return my_response(reason=reason,status_code=500)
 
@@ -90,6 +95,7 @@ def login(request):
 
     # Not POST method so return bad response
     reason = "Only 'POST' to this endpoint"
+    logger.debug(reason)
     return my_response(reason=reason,status_code=405)
 
 @cache_page(60*10)
