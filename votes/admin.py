@@ -90,11 +90,19 @@ class CardListAdmin(admin.ModelAdmin):
     new_uuid_action.short_description = 'Create new uuid for selected card lists'
 
 
-    #raw_id_fields = ('cards',)
+class ChooseAdmin(admin.ModelAdmin):
+    list_display = ('daily_notification','card_lists_count','ready')
+
+    def card_lists_count(self,obj):
+        return obj.lists.count()
+
+    def daily_notification(self,obj):
+        return obj.message
+
 
 admin.site.register(Tag)
 admin.site.register(Card,CardAdmin)
 admin.site.register(CardList,CardListAdmin)
 admin.site.register(ShareText)
-admin.site.register(Choose)
+admin.site.register(Choose,ChooseAdmin)
 admin.site.empty_value_display = 'Nothing here'

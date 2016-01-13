@@ -24,7 +24,7 @@ def notify(options):
     if verbose:
         print 'Grabbing cards that need to send out notifications'
 
-    lists = CardList.objects.filter(active=True,approved=True)
+    lists = CardList.objects.filter(active=True,approved=True).prefetch_related('cards')
     if verbose:
         print 'Grabbed %s cards lists that are fake active' % lists.count()
     
