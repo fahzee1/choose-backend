@@ -1,8 +1,20 @@
+import pdb
 from django.http import HttpResponse
-
+from django.shortcuts import render
+from django.contrib.sites.shortcuts import get_current_site
+from django.conf import settings
 
 
 
 
 def home(request):
-    return HttpResponse()
+    if settings.DEBUG:
+        return HttpResponse()
+
+    current_site = get_current_site(request)
+    if current_site.domain == 'api.trychoose.com':
+        return HttpResponse()
+
+    elif current_site.domain == 'emekaenterprises.com':
+        return render(request,'emeka/base.html',{'foo':'bar'})
+

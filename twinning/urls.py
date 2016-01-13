@@ -24,6 +24,8 @@ import views
 admin.site.site_header = 'Choose Admin'
 
 urlpatterns = [
+
+    
     url(r'^$', views.home,name='home'),
     url(r'^admin/', include(admin.site.urls)),
 

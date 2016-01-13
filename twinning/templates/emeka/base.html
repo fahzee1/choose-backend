@@ -1,0 +1,21 @@
+<html>
+<head>
+    {% block ios %}
+    <meta property="al:ios:url" content="{% block ios_url %}couchinapp://invite_from_fb?referral=123456789{% endblock %}"/>
+    <meta property="al:ios:app_store_id" content="{% block ios_appstore_id %}123456789{% endblock %}" />
+    <meta property="al:ios:app_name" content="{% block ios_app_name %}Couchin{% endblock %}" />
+    {% endblock %}
+    {% block android %}
+    <meta property="al:android:url" content="{% block android_url %}couchinapp://invite_from_fb?referral=123456789{% endblock %}" />
+    <meta property="al:android:app_name" content="{% block android_app_name %}Couchin{% endblock %}" />
+    <meta property="al:android:package" content="{% block android_package %}com.mycompany.couchin{% endblock %}" />
+    {% endblock %}
+    <meta property="al:web:url" content="{% block web_url %} http://www.couchinapp.com/myapp.html {% endblock %}" />
+    <meta property="og:title" content="Choose" />
+    <meta property="og:type" content="website" />
+</head>
+<body>
+    Choose App Link
+
+</body>
+</html>

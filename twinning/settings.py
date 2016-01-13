@@ -15,7 +15,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+ADMINS = ['cj@ytrychoose.com']
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -25,6 +25,7 @@ SECRET_KEY = '5n076m!!(kjy3#q@-ub9)t!e+gye0%sj$zb274=uran18%7mg3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+SITE_ID = 1
 ALLOWED_HOSTS = ['192.168.200.187:8000','162.243.170.41','api.trychoose.com','www.api.trychoose.com']
 
 
@@ -36,7 +37,8 @@ DEFAULT_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'django.contrib.sites'
 )
 
 THIRD_PARTY_APPS = (
@@ -156,6 +158,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+#email settings
+DEFAULT_FROM_EMAIL = "genysolutions1@gmail.com"
+SERVER_EMAIL = "genysolutions1@gmail.com"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "genysolutions1@gmail.com"
+EMAIL_HOST_PASSWORD = 'genychoose'
+
+#databse performance help
+CONN_MAX_AGE = 60 # tune this based on traffic
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
@@ -201,3 +214,4 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
