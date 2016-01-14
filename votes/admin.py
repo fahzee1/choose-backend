@@ -127,7 +127,7 @@ class CardAdmin(admin.ModelAdmin):
 
 
 class CardListAdmin(admin.ModelAdmin):
-    list_display = ('name','approved','active','last_display','total_cards','uuid')
+    list_display = ('name','approved','active','last_display','total_cards','uuid','id')
     list_editable = ('active','approved')
     list_filter = ('name',)
     search_fields = ('name',)

@@ -353,7 +353,7 @@ def share_text(request):
 def lists(request):
     message = {}
     if request.method == HttpTable.get:
-        lists = CardList.objects.filter(approved=True)
+        lists = CardList.objects.filter(approved=True).order_by('id')
         message['lists'] = CardList.queryset_to_dict(lists)
         return my_response(message,success=True)
 
