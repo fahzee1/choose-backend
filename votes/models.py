@@ -48,6 +48,13 @@ class Tag(Base):
 """
 
 class Card(Base):
+    STAFF_CREATED = 1
+    COMMUNITY_CREATED = 2
+    CREATED_CHOICES = (
+        (STAFF_CREATED,'Staff'),
+        (COMMUNITY_CREATED,'Community')
+    )
+
     user = models.ForeignKey('users.UserProfile',related_name='card')
     tags = models.ManyToManyField(Tag,related_name='tag',blank=True,null=True)
     image = models.ImageField(upload_to='images/%Y/%m/%d')
@@ -63,6 +70,7 @@ class Card(Base):
     branch_link = models.CharField(max_length=255,blank=True)
     fake_notification_count = models.IntegerField(default=0,help_text='This is the amount of times we sent fake notifications')
     fake_active = models.BooleanField(default=True)
+    created_by = models.IntegerField(choices=CREATED_CHOICES,default=STAFF_CREATED)
 
     class Meta:
         ordering = ['-created']
@@ -155,14 +163,22 @@ class Card(Base):
                 # clear cache? so users see new data
                 cache.clear()
 
+    def notify_featured(self):
+        message = "'%s' is featured. Watch the votes pile in!" % (self.question)
+        data = {'card_id':str(self.id)}
+        self.send_notification(message,data)
+
+    def parse_user_name(self):
+        name = self.user.username.replace(' ','-')
+        return "%s-%s" % (name,self.user.facebook_id)
 
     def send_notification(self,message,data={}):
         # sends push to creator of this card
         register(settings.APPLICATION_ID, settings.REST_API_KEY,master_key=settings.MASTER_KEY)
         data['alert'] = message
         data['badge'] = "Increment"
-        formatted_name = self.user.username.replace(' ','-')
-        Push.alert(data,channels=[formatted_name])
+        username = self.parse_user_name()
+        Push.alert(data,channels=[username])
 
     @classmethod
     def queryset_to_dict(cls,qs):
@@ -179,7 +195,7 @@ class CardList(models.Model):
     Should hold lists like 'featured, daily 12, etc'
     """
     name = models.CharField(max_length=255, blank=False, help_text='Name of Card list')
-    cards = models.ManyToManyField(Card,related_name='lists')
+    cards = models.ManyToManyField(Card,related_name='lists',blank=True)
     approved = models.BooleanField(default=False,help_text='Only approved items will be shown in the menu of the client')
     active = models.BooleanField(default=False)
     last_display = models.DateTimeField(auto_now_add=True)

@@ -3,7 +3,16 @@ from optparse import make_option
 import traceback
 from django.core.management.base import BaseCommand, CommandError
 from votes.models import CardList
+from django.utils import timezone
 
+
+TIMES = {
+    'early_morning':[0,1,2,3,4,5,6],
+    'morning':[7,8,9,10,11],
+    'afternoon':[12,13,14,15,16,17],
+    'evening':[18,19,20],
+    'night':[21,22,23]
+}
 
 class Command(BaseCommand):
     help = 'Notify users that cards are ready'
@@ -21,6 +30,13 @@ class Command(BaseCommand):
 
 def notify(options):
     verbose = options['verbose']
+    
+    now = timezone.localtime(timezone.now())
+    if now.hour in TIMES['early_morning'] or now.hour in TIMES['night']:
+        if verbose:
+            print 'time is either too late or too early to run'
+        return
+
     if verbose:
         print 'Grabbing cards that need to send out notifications'
 

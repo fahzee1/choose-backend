@@ -4,15 +4,20 @@ import random
 # Register your models here.
 
 
+class CardListInline(admin.TabularInline):
+    model = CardList.cards.through
+    extra = 1
+
+
 class CardAdmin(admin.ModelAdmin):
     list_display = ('question','string_question_type','image_link','id','user')
     list_display_links = ('question',)
-    list_filter = ('question','user__username')
+    list_filter = ('tags','created_by','user__username')
     search_fields = ('question','user__username')
     ordering = ('created',)
     filter_horizontal = ('tags',)
-    fields = ('user',
-              'image_url',
+    fields = (('user','created_by'),
+              'image_link',
               'question',
               'question_type',
               ('left_votes_count','right_votes_count'),
@@ -22,7 +27,8 @@ class CardAdmin(admin.ModelAdmin):
               'tags',
               ('fake_active','fake_notification_count'))
     readonly_fields = ('image_link','image_url','branch_link')
-    actions = ['set_random_user','set_random_votes']
+    actions = ['set_random_user','set_random_votes','add_to_featured','add_to_daily','add_to_community']
+    inlines = [CardListInline]
 
     def save_model(self,request,obj,form,change):
         if not obj.image_url:
@@ -66,6 +72,58 @@ class CardAdmin(admin.ModelAdmin):
 
     set_random_votes.short_description = 'Add fake votes to selected cards'
 
+    def add_to_featured(self,request,queryset):
+        featured = CardList.objects.filter(name='Featured')
+        if not featured:
+            self.message_user(request,'No list named Featured')
+            return
+
+        featured = featured[0]
+        for i in queryset:
+            if featured not in i.lists.all():
+                i.lists.add(featured)
+                i.save()
+
+        self.message_user(request,'Done adding %s card to Featured'% queryset.count())
+
+    add_to_featured.short_description = 'Add selected cards to Featured'
+
+    def add_to_daily(self,request,queryset):
+        daily = CardList.objects.filter(name='Daily 12')
+        if not daily:
+            self.message_user(request,'No list named Daily 12')
+            return
+
+        daily = daily[0]
+        for i in queryset:
+            if daily not in i.lists.all():
+                i.lists.add(daily)
+                i.save()
+
+        self.message_user(request,'Done adding %s card to Daily 12'% queryset.count())
+
+    add_to_daily.short_description = 'Add selected cards to Daily 12'
+
+    def add_to_community(self,request,queryset):
+        import pdb
+        pdb.set_trace()
+        community = CardList.objects.filter(name='Community')
+        if not community:
+            self.message_user(request,'No list named Community')
+            return
+
+        community = community[0]
+        for i in queryset:
+            if community not in i.lists.all():
+                i.lists.add(community)
+                i.save()
+
+        self.message_user(request,'Done adding %s card to Community'% queryset.count())
+
+    add_to_community.short_description = 'Add selected cards to Community'
+
+
+
 
 
 
@@ -98,6 +156,7 @@ class ChooseAdmin(admin.ModelAdmin):
 
     def daily_notification(self,obj):
         return obj.message
+
 
 
 admin.site.register(Tag)
