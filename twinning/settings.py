@@ -188,11 +188,13 @@ CUMULUS = {
     'USERNAME': 'cjogbuehi',
     'API_KEY': '8f331476559e8f3c5255714ad8a1bcfd',
     'CONTAINER': 'choose-001',
+    'STATIC_CONTAINER':'choose-static',
     'PYRAX_IDENTITY_TYPE': 'rackspace',
     'USE_SSL':False,
     'CNAMES':{
         'http://d4d4fa7cf0b2ba9ea99e-9f937d12f8afada8e7f4b412171af17f.r43.cf1.rackcdn.com':'http://images.trychoose.com'
-    }
+    },
+    'GZIP_CONTENT_TYPES':['image/jpeg','text/css','image/png']
 }
 
 DEFAULT_FILE_STORAGE = 'cumulus.storage.CumulusStorage'
