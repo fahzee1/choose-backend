@@ -12,6 +12,7 @@ def home(request):
 
     elif current_site.domain == 'emekaenterprises.com':
         return render(request,'emeka/index.html',{'foo':'bar'})
+
     else:
-        return HttpBadResponse()
+        return HttpResponseBadRequest()
 
