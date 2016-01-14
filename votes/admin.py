@@ -105,8 +105,6 @@ class CardAdmin(admin.ModelAdmin):
     add_to_daily.short_description = 'Add selected cards to Daily 12'
 
     def add_to_community(self,request,queryset):
-        import pdb
-        pdb.set_trace()
         community = CardList.objects.filter(name='Community')
         if not community:
             self.message_user(request,'No list named Community')
