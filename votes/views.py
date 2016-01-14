@@ -108,7 +108,9 @@ def show_cards(request):
             temp_limit = offset + limit
             # try getting cards
             try:
+                logger.debug('trying list for query %s' % query)
                 category = CardList.objects.select_related().get(name=query)
+                logger.debug('got list for query %s' % query)
                 # check for uuid to see if we need to return new data or nothing
                 if uuid:
                     if uuid == str(category.uuid):
@@ -120,12 +122,15 @@ def show_cards(request):
                     # only return this if we have data so client knows to stop fetching
                     newOffset = int(limit) + int(offset)
             except CardList.DoesNotExist:
+                logger.debug('list doesnt exist for query %s' % query)
                 reason = "CardList object does not exist"
                 return my_response(reason=reason,status_code=400) 
         else:
             # if no limit or offset just return the last 100 objects max
             try:
+                logger.debug('trying list for query %s' % query)
                 category = CardList.objects.select_related().get(name=query)
+                logger.debug('got list for query %s' % query)
                 # check for uuid to see if we need to return new data or nothing
                 if uuid:
                     if uuid == str(category.uuid):
@@ -134,6 +139,7 @@ def show_cards(request):
 
                 all_cards = category.cards.all()[:100]
             except CardList.DoesNotExist:
+                logger.debug('list doesnt exist for query %s' % query)
                 reason = "CardList object does not exist"
                 return my_response(reason=reason,status_code=400)
 
@@ -277,7 +283,7 @@ def create_card(request):
                 user.fake_user = True
                 user.email = "%s@aol.com" % last_id
                 user.save()
-                logger.debug('new fake user created %s' % name)
+                logger.debug('new fake user created %s' % creator_name)
 
         if not user:
             try:
