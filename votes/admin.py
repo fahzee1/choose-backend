@@ -1,6 +1,7 @@
 from django.contrib import admin
 from models import Tag, Card, ShareText, CardList,Choose
 import random
+from django.core.cache import cache
 # Register your models here.
 
 
@@ -40,17 +41,17 @@ class CardAdmin(admin.ModelAdmin):
         obj.image.delete()
 
     def image_link(self,obj):
-      if obj.image_url:
-        return u'<a href="%s">%s</a>' % (obj.image_url,obj.image_url)
+        if obj.image_url:
+            return u'<a href="%s">%s</a>' % (obj.image_url,obj.image_url)
     image_link.allow_tags = True
 
     def string_question_type(self,obj):
-      if obj.question_type == 101:
-        return 'YES/NO'
-      elif obj.question_type == 100:
-        return 'A/B'
-      else:
-        return 'Impropery configured'
+        if obj.question_type == 101:
+            return 'YES/NO'
+        elif obj.question_type == 100:
+            return 'A/B'
+        else:
+            return 'Impropery configured'
 
     def set_random_user(self,request,queryset):
         for i in queryset:
@@ -139,10 +140,12 @@ class CardListAdmin(admin.ModelAdmin):
       return '%s cards' % obj.cards.all().count()
 
     def new_uuid_action(self,request,queryset):
-      for i in queryset:
-        i.new_uuid(save=True)
+        for i in queryset:
+            i.new_uuid(save=True)
 
-      self.message_user(request,'Succesfully changed %s uuids' % queryset.count())
+        cache.clear()
+        self.message_user(request,'Succesfully changed %s uuids' % queryset.count())
+
     new_uuid_action.short_description = 'Create new uuid for selected card lists'
 
 
