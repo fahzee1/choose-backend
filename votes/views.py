@@ -304,6 +304,9 @@ def create_card(request):
         card.question_type = question_type
         card.image.save(imagename,ContentFile(image))
         card.fake_votes(save=False,notify=False)
+        if not creator_name and not user.is_staff:
+            card.created_by = Card.COMMUNITY_CREATED
+
         card.save()
         message['card'] = card.to_dict();
         return my_response(message,success=True,status_code=201)
