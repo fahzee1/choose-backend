@@ -100,6 +100,11 @@ def show_cards(request):
         #get limit and offset from client if there
         limit = request.GET.get('limit',None)
         offset = request.GET.get('offset',None)
+
+        # Off for now
+        limit = None
+        offset = None
+
         newOffset = None
         if limit and offset:
             #if we have limi and offset convert them to ints
