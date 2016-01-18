@@ -11,7 +11,7 @@ class CardListInline(admin.TabularInline):
 
 
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('question','string_question_type','image_link','id','user')
+    list_display = ('question','string_question_type','image_link','id','user','displayed_in')
     list_display_links = ('question',)
     list_filter = ('tags','created_by','user__username')
     search_fields = ('question','user__username')
@@ -52,6 +52,17 @@ class CardAdmin(admin.ModelAdmin):
             return 'A/B'
         else:
             return 'Impropery configured'
+
+    def displayed_in(self,obj):
+        lists = obj.lists.all()
+        if not lists:
+            return ''
+        for i in lists:
+            return i.name
+
+
+
+
 
     def set_random_user(self,request,queryset):
         for i in queryset:
