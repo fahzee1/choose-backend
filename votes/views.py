@@ -143,6 +143,7 @@ def show_cards(request):
                 reason = "CardList object does not exist"
                 return my_response(reason=reason,status_code=400)
 
+        logger.debug('returning %s cards' % all_cards.count())
         cards = CardList.queryset_to_dict(all_cards)
         message['cards'] = cards
         message['uuid'] = str(category.uuid)
