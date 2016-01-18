@@ -209,7 +209,7 @@ class CardList(models.Model):
         if self.data_changed:
             self.new_uuid(save=False)
             self.data_changed = False
-
+            cache.clear()
         return super(CardList, self).save(*args, **kwargs)
 
     def to_dict(self):
