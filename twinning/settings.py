@@ -103,6 +103,10 @@ LOGGING = {
             'filename': '/home/cjogbuehi/logs/choose.log',
             'formatter': 'verbose'
         },
+        'mail_admins':{
+            'level':'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
     },
     'loggers': {
         'django': {
