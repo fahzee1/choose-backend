@@ -40,7 +40,7 @@
 
     <!-- Document Title
     ============================================= -->
-    <title>Canvas | The Multi-Purpose HTML5 Template</title>
+    <title>{% block title %}Canvas | The Multi-Purpose HTML5 Template{% endblock %}</title>
 
 </head>
 
@@ -50,6 +50,7 @@
     ============================================= -->
     <div id="wrapper" class="clearfix">
 
+        {% block pre-header %}
         <!-- Header
         ============================================= -->
         <header id="header" class="transparent-header full-header" data-sticky-class="not-dark">
@@ -63,7 +64,7 @@
                     <!-- Logo
                     ============================================= -->
                     <div id="logo">
-                        <a href="{% url 'home' %}" class="standard-logo" data-dark-logo="{% static 'images/logo-dark.png' %}"><img src="{% static 'images/logo.png' %}" alt="Canvas Logo"></a>
+                        <a href="{% url 'home' %}" class="standard-logo" data-dark-logo="{% static 'images/emeka-gold.png' %}"><img src="{% static 'images/emeka-blue.png' %}" alt="Emeka Enterprises Logo"></a>
                         <a href="{% url 'home' %}" class="retina-logo" data-dark-logo="{% static 'images/logo-dark@2x.png' %}"><img src="{% static 'images/logo@2x.png' %}" alt="Canvas Logo"></a>
                     </div><!-- #logo end -->
 
@@ -71,7 +72,11 @@
                     ============================================= -->
                     <nav id="primary-menu">
                         <ul>
-                            <li><a href="#cj" data-scrollto="#cj" ><div>About</div></a></li>
+                            <li><a href="{% url 'home' %}"><div>Home</div></a></li>
+                            <li><a href="#who-we-are" data-scrollto="#who-we-are" ><div>Who we are</div></a></li>
+                            <li><a href="#what-we-do" data-scrollto="#what-we-do" ><div>What we do</div></a></li>
+                            <li><a href="{% url 'career' %}"><div>Career</div></a></li>
+                            {% block mega-menu %}
                             <li class="mega-menu"><a href="link.html"><div>Mega Menu</div></a>
                                 <div class="mega-menu-content style-2 col-4 clearfix">
                                     <ul>
@@ -88,6 +93,7 @@
                                     </ul>
                                 </div>
                             </li>
+                            {% endblock %}
                         </ul>
                     </nav>
 
@@ -96,17 +102,18 @@
             </div>
 
         </header><!-- #header end -->
+        {% endblock %}
 
-
+        {% block header %}
         <section id="slider" class="slider-parallax swiper_wrapper full-screen clearfix">
 
             <div class="swiper-container swiper-parent">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide dark" style="background-image: url('{% static 'images/slider/swiper/1.jpg' %});">
+                    <div class="swiper-slide dark" style="background-image: url('{% static 'images/yello-team.jpg' %});">
                         <div class="container clearfix">
                             <div class="slider-caption slider-caption-center">
-                                <h2 data-caption-animate="fadeInUp">Welcome to Canvas</h2>
-                                <p data-caption-animate="fadeInUp" data-caption-delay="200">Create just what you need for your Perfect Website. Choose from a wide range of Elements &amp; simply put them on your own Canvas.</p>
+                                <h2 data-caption-animate="fadeInUp">Mobile Is The New Sexy</h2>
+                                <p data-caption-animate="fadeInUp" data-caption-delay="200">Emeka Enterprises aims to be No.1 mobile business platform</p>
                             </div>
                         </div>
                     </div>
@@ -114,22 +121,22 @@
                         <div class="container clearfix">
                             <div class="slider-caption slider-caption-center">
                                 <h2 data-caption-animate="fadeInUp">Beautifully Flexible</h2>
-                                <p data-caption-animate="fadeInUp" data-caption-delay="200">Looks beautiful &amp; ultra-sharp on Retina Screen Displays. Powerful Layout with Responsive functionality that can be adapted to any screen size.</p>
+                                <p data-caption-animate="fadeInUp" data-caption-delay="200">We create beautiful, inventive, efficient software, mobile apps, and services.</p>
                             </div>
                         </div>
                         <div class="video-wrap">
-                            <video id="slide-video" poster="{% static 'images/videos/explore.jpg' %}" preload="auto" loop autoplay muted>
-                                <source src="{% static 'images/videos/explore.webm' %}" type='video/webm' />
-                                <source src="{% static 'images/videos/explore.mp4' %}" type='video/mp4' />
+                            <video id="slide-video" poster="{% static 'images/videos/1.jpg' %}" preload="auto" loop autoplay muted>
+                                <source src="{% static 'images/videos/1.webm' %}" type='video/webm' />
+                                <source src="{% static 'images/videos/1.mp4' %}" type='video/mp4' />
                             </video>
                             <div class="video-overlay" style="background-color: rgba(0,0,0,0.55);"></div>
                         </div>
                     </div>
-                    <div class="swiper-slide" style="background-image: url('{% static 'images/slider/swiper/3.jpg' %}'); background-position: center top;">
+                    <div class="swiper-slide dark" style="background-image: url('{% static 'images/services/home-testi-bg.jpg' %}'); background-position: center top;">
                         <div class="container clearfix">
-                            <div class="slider-caption">
+                            <div class="slider-caption slider-caption-center">
                                 <h2 data-caption-animate="fadeInUp">Great Performance</h2>
-                                <p data-caption-animate="fadeInUp" data-caption-delay="200">You'll be surprised to see the Final Results of your Creation &amp; would crave for more.</p>
+                                <p data-caption-animate="fadeInUp" data-caption-delay="200">We are the ideal mobile lifestyle solutions provider for the new mobile world</p>
                             </div>
                         </div>
                     </div>
@@ -145,6 +152,9 @@
                         slidesPerView: 1,
                         grabCursor: true,
                         loop: true,
+                        mode:'horizontal',
+                        autoplay:5000,
+                        speed:600,
                         onSwiperCreated: function(swiper){
                             $('[data-caption-animate]').each(function(){
                                 var $toAnimateElement = $(this);
@@ -216,27 +226,30 @@
             <a href="#" data-scrollto="#content" data-offset="100" class="dark one-page-arrow"><i class="icon-angle-down infinite animated fadeInDown"></i></a>
 
         </section>
+        {% endblock %}
 
+        {% block content %}
         <!-- Content
         ============================================= -->
         <section id="content">
 
             <div class="content-wrap">
 
+                {% block content-header %}
                 <div class="container clearfix">
                     <div class="row clearfix">
 
                         <div class="col-lg-5">
                             <div class="heading-block topmargin">
-                                <h1>Welcome to Canvas.<br>MultiPurpose Template.</h1>
+                                <h1>Emeka Enterprises.<br>Mobile Media Group.</h1>
                             </div>
-                            <p class="lead">Create a website that you are gonna be proud of. Be it Business, Portfolio, Agency, Photography, eCommerce &amp; much more.</p>
+                            <p class="lead">From the very beginning, our mission was to provide users with mobile apps that can be used 24 hours a day, seven days a week. We cater to users with lifestyles that are more mobile than ever, and our portfolio now spans apps for shopping, media, travel, ad and digital marketing.</p>
                         </div>
 
                         <div class="col-lg-7">
 
                             <div style="position: relative; margin-bottom: -60px;" class="ohidden" data-height-lg="426" data-height-md="567" data-height-sm="470" data-height-xs="287" data-height-xxs="183">
-                                <img src="{% static 'images/services/main-fbrowser.png' %}" style="position: absolute; top: 0; left: 0;" data-animate="fadeInUp" data-delay="100" alt="Chrome">
+                                <img src="{% static 'images/appshowcase/ipad-section.png' %}" style="position: absolute; top: 0; left: 0;" data-animate="fadeInUp" data-delay="100" alt="Chrome">
                                 <img src="{% static 'images/services/main-fmobile.png' %}" style="position: absolute; top: 0; left: 0;" data-animate="fadeInUp" data-delay="400" alt="iPad">
                             </div>
 
@@ -244,7 +257,9 @@
 
                     </div>
                 </div>
+                {% endblock %}
 
+                {% block content-1 %}
                 <div class="section nobottommargin">
                     <div class="container clear-bottommargin clearfix">
 
@@ -256,7 +271,7 @@
                                     <span class="before-heading">Scalable on Devices.</span>
                                     <h4>Responsive &amp; Retina</h4>
                                 </div>
-                                <p>Employment respond committed meaningful fight against oppression social challenges rural legal aid governance. Meaningful work, implementation, process cooperation, campaign inspire.</p>
+                                <p>Our solutions work great on iOS, Android, Windows and Desktop. We got you covered on all platforms</p>
                             </div>
 
                             <div class="col-md-4 bottommargin">
@@ -265,30 +280,32 @@
                                     <span class="before-heading">Smartly Coded &amp; Maintained.</span>
                                     <h4>Powerful Performance</h4>
                                 </div>
-                                <p>Medecins du Monde Jane Addams reduce child mortality challenges Ford Foundation. Diversification shifting landscape advocate pathway to a better life rights international. Assessment.</p>
+                                <p>All of our applications and solutions are built with the most talented engineers in tech. Acquired solutions are maintained by our in-house team of engineers and designers.</p>
                             </div>
 
                             <div class="col-md-4 bottommargin">
-                                <i class="i-plain color i-large icon-line2-equalizer inline-block" style="margin-bottom: 15px;"></i>
+                                <i class="i-plain color i-large icon-heart inline-block" style="margin-bottom: 15px;"></i>
                                 <div class="heading-block nobottomborder" style="margin-bottom: 15px;">
-                                    <span class="before-heading">Flexible &amp; Customizable.</span>
-                                    <h4>Truly Multi-Purpose</h4>
+                                    <span class="before-heading">Loved by All.</span>
+                                    <h4>Great Experience </h4>
                                 </div>
-                                <p>Democracy inspire breakthroughs, Rosa Parks; inspiration raise awareness natural resources. Governance impact; transformative donation philanthropy, respect reproductive.</p>
+                                <p>User feedback tells us we're on the right track. At Emeka Enterprises we'll continue to crank out applications that our users love.</p>
                             </div>
 
                         </div>
 
                     </div>
                 </div>
+                {% endblock %}
 
+                {% block content-2 %}
                 <div class="container clearfix">
 
                     <div class="row topmargin-lg bottommargin-sm">
 
-                        <div class="heading-block center" id='cj'>
-                            <h2>Even more Feature Rich</h2>
-                            <span class="divcenter">Philanthropy convener livelihoods, initiative end hunger gender rights local. John Lennon storytelling; advocate, altruism impact catalyst.</span>
+                        <div class="heading-block center" id='who-we-are'>
+                            <h2>WHO WE ARE</h2>
+                            <span class="divcenter">We're pushing the boundaries of the mobile media space. Eat, drink and play with Emeka Enterprises solutions.</span>
                         </div>
 
                         <div class="col-md-4 col-sm-6 bottommargin">
@@ -354,7 +371,9 @@
                     </div>
 
                 </div>
+                {% endblock %}
 
+                {% block content-3 %}
                 <div class="row clearfix common-height">
 
                     <div class="col-md-6 center col-padding" style="background: url('{% static 'images/services/main-bg.jpg' %}') center center no-repeat; background-size: cover;">
@@ -379,7 +398,9 @@
                     </div>
 
                 </div>
+                {% endblock %}
 
+                {% block fun-data %}
                 <div class="row clearfix bottommargin-lg common-height">
 
                     <div class="col-md-3 col-sm-6 dark center col-padding" style="background-color: #515875;">
@@ -401,8 +422,8 @@
                     <div class="col-md-3 col-sm-6 dark center col-padding" style="background-color: #6697B9;">
                         <div>
                             <i class="i-plain i-xlarge divcenter icon-line2-layers"></i>
-                            <div class="counter counter-lined"><span data-from="10" data-to="408" data-refresh-interval="25" data-speed="3500"></span></div>
-                            <h5>No. of Templates</h5>
+                            <div class="counter counter-lined"><span data-from="10" data-to="110" data-refresh-interval="25" data-speed="3500"></span></div>
+                            <h5>No. of Team Members</h5>
                         </div>
                     </div>
 
@@ -415,7 +436,9 @@
                     </div>
 
                 </div>
+                {% endblock %}
 
+                {% block icon-set %}
                 <div class="container clearfix">
 
                     <div class="col_one_third">
@@ -515,7 +538,9 @@
                     <div class="clear"></div>
 
                 </div>
+                {% endblock %}
 
+                {% block latest-work-header %}
                 <div class="section topmargin nobottommargin nobottomborder">
                     <div class="container clearfix">
                         <div class="heading-block center nomargin">
@@ -523,7 +548,9 @@
                         </div>
                     </div>
                 </div>
+                {% endblock %}
 
+                {% block latest-work %}
                 <div id="portfolio" class="portfolio-nomargin portfolio-notitle portfolio-full clearfix">
 
                     <article class="portfolio-item pf-media pf-icons">
@@ -688,15 +715,19 @@
                     });
 
                 </script>
+                {% endblock %}
 
                 <div class="clear"></div>
 
-                <a href="portfolio.html" class="button button-full button-dark center tright bottommargin-lg">
+                {% block banner %}
+                <a href="mailto:cj@emekaenterprises.com" target="_top" class="button button-full button-light center tright bottommargin-lg">
                     <div class="container clearfix">
-                        More than 100+ predefined Portfolio Grid Layouts. <strong>See More</strong> <i class="icon-caret-right" style="top:4px;"></i>
+                        Reach out to our awesome team to hear more about what we do. <strong>Contact Now</strong> <i class="icon-caret-right" style="top:4px;"></i>
                     </div>
                 </a>
+                {% endblock %}
 
+                {% block content-4 %}
                 <div class="container clearfix">
 
                     <div class="col_one_third bottommargin-sm center">
@@ -705,20 +736,22 @@
 
                     <div class="col_two_third bottommargin-sm col_last">
 
-                        <div class="heading-block topmargin-sm">
-                            <h3>Optimized for Mobile &amp; Touch Enabled Devices.</h3>
+                        <div class="heading-block topmargin-sm" id="what-we-do">
+                            <h3>WHAT WE DO</h3>
                         </div>
 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero quod consequuntur quibusdam, enim expedita sed quia nesciunt incidunt accusamus necessitatibus modi adipisci officia libero accusantium esse hic, obcaecati, ullam, laboriosam!</p>
+                        <p>Emeka Enterprises is a mobile service and platform provider across Media, Advertsing, Shopping, and Gaming.</p>
 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti vero, animi suscipit id facere officia. Aspernatur, quo, quos nisi dolorum aperiam fugiat deserunt velit rerum laudantium cum magnam.</p>
+                        <p>We build custom media applications in-house and partner with other mobile media companies to strive to become the top player in the world of mobile media and commerce.</p>
 
                         <a href="#" class="button button-border button-dark button-rounded button-large noleftmargin topmargin-sm">Learn more</a>
 
                     </div>
 
                 </div>
+                {% endblock %}
 
+                {% block clients %}
                 <div class="section parallax dark nobottommargin" style="background-image: url('{% static 'images/services/home-testi-bg.jpg' %}''); padding: 100px 0;" data-stellar-background-ratio="0.4">
 
                     <div class="heading-block center">
@@ -769,7 +802,9 @@
                     </div>
 
                 </div>
+                {% endblock %}
 
+                {% block blog-header %}
                 <div class="section notopmargin notopborder">
                     <div class="container clearfix">
                         <div class="heading-block center nomargin">
@@ -777,7 +812,9 @@
                         </div>
                     </div>
                 </div>
+                {% endblock %}
 
+                {% block blog %}
                 <div class="container clear-bottommargin clearfix">
                     <div class="row">
 
@@ -855,7 +892,9 @@
 
                     </div>
                 </div>
+                {% endblock %}
 
+                {% block meet-team %}
                 <div class="section">
                     <div class="container clearfix">
 
@@ -969,7 +1008,9 @@
 
                     </div>
                 </div>
+                {% endblock %}
 
+                {% block carousel %}
                 <div class="container clearfix">
 
                     <div id="oc-clients" class="owl-carousel image-carousel">
@@ -1014,11 +1055,14 @@
                     </script>
 
                 </div>
+                {% endblock %}
 
             </div>
 
         </section><!-- #content end -->
+        {% endblock %}
 
+        {% block footer %}
         <!-- Footer
         ============================================= -->
         <footer id="footer" class="dark">
@@ -1035,25 +1079,24 @@
 
                             <div class="widget clearfix">
 
-                                <img src="{% static 'images/footer-widget-logo.png' %}" alt="" class="footer-logo">
+                                <img src="{% static 'images/emeka-gold.png' %}" alt="" class="footer-logo">
 
-                                <p>We believe in <strong>Simple</strong>, <strong>Creative</strong> &amp; <strong>Flexible</strong> Design Standards.</p>
+                                <p>We Take Mobile Very Seriously</p>
 
                                 <div style="background: url('{% static 'images/world-map.png' %}') no-repeat center center; background-size: 100%;">
                                     <address>
                                         <strong>Headquarters:</strong><br>
-                                        795 Folsom Ave, Suite 600<br>
-                                        San Francisco, CA 94107<br>
+                                        1203 Wilshire ct<br>
+                                        Allen, TX 75002<br>
                                     </address>
-                                    <abbr title="Phone Number"><strong>Phone:</strong></abbr> (91) 8547 632521<br>
-                                    <abbr title="Fax"><strong>Fax:</strong></abbr> (91) 11 4752 1433<br>
-                                    <abbr title="Email Address"><strong>Email:</strong></abbr> info@canvas.com
+                                    <abbr title="Phone Number"><strong>Phone:</strong></abbr> (214) 566 8710<br>
+                                    <abbr title="Email Address"><strong>Email:</strong></abbr> cj@emekaenterprises.com
                                 </div>
 
                             </div>
 
                         </div>
-
+                        {% block blogroll %}
                         <div class="col_one_third">
 
                             <div class="widget widget_links clearfix">
@@ -1073,50 +1116,9 @@
                             </div>
 
                         </div>
+                        {% endblock %}
 
-                        <div class="col_one_third col_last">
-
-                            <div class="widget clearfix">
-                                <h4>Recent Posts</h4>
-
-                                <div id="post-list-footer">
-                                    <div class="spost clearfix">
-                                        <div class="entry-c">
-                                            <div class="entry-title">
-                                                <h4><a href="#">Lorem ipsum dolor sit amet, consectetur</a></h4>
-                                            </div>
-                                            <ul class="entry-meta">
-                                                <li>10th July 2014</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div class="spost clearfix">
-                                        <div class="entry-c">
-                                            <div class="entry-title">
-                                                <h4><a href="#">Elit Assumenda vel amet dolorum quasi</a></h4>
-                                            </div>
-                                            <ul class="entry-meta">
-                                                <li>10th July 2014</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div class="spost clearfix">
-                                        <div class="entry-c">
-                                            <div class="entry-title">
-                                                <h4><a href="#">Debitis nihil placeat, illum est nisi</a></h4>
-                                            </div>
-                                            <ul class="entry-meta">
-                                                <li>10th July 2014</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
+                        
                     </div>
 
                     <div class="col_one_third col_last">
@@ -1139,6 +1141,7 @@
 
                         </div>
 
+                        {% block subscribe %}
                         <div class="widget subscribe-widget clearfix">
                             <h5><strong>Subscribe</strong> to Our Newsletter to get Important News, Amazing Offers &amp; Inside Scoops:</h5>
                             <div id="widget-subscribe-form-result" data-notify-type="success" data-notify-msg=""></div>
@@ -1168,29 +1171,7 @@
                                 });
                             </script>
                         </div>
-
-                        <div class="widget clearfix" style="margin-bottom: -20px;">
-
-                            <div class="row">
-
-                                <div class="col-md-6 clearfix bottommargin-sm">
-                                    <a href="#" class="social-icon si-dark si-colored si-facebook nobottommargin" style="margin-right: 10px;">
-                                        <i class="icon-facebook"></i>
-                                        <i class="icon-facebook"></i>
-                                    </a>
-                                    <a href="#"><small style="display: block; margin-top: 3px;"><strong>Like us</strong><br>on Facebook</small></a>
-                                </div>
-                                <div class="col-md-6 clearfix">
-                                    <a href="#" class="social-icon si-dark si-colored si-rss nobottommargin" style="margin-right: 10px;">
-                                        <i class="icon-rss"></i>
-                                        <i class="icon-rss"></i>
-                                    </a>
-                                    <a href="#"><small style="display: block; margin-top: 3px;"><strong>Subscribe</strong><br>to RSS Feeds</small></a>
-                                </div>
-
-                            </div>
-
-                        </div>
+                        {% endblock %}
 
                     </div>
 
@@ -1198,6 +1179,7 @@
 
             </div>
 
+            {% block copyrights %}
             <!-- Copyrights
             ============================================= -->
             <div id="copyrights">
@@ -1205,8 +1187,10 @@
                 <div class="container clearfix">
 
                     <div class="col_half">
-                        Copyrights &copy; 2014 All Rights Reserved by Canvas Inc.<br>
+                        Copyrights &copy; 2014 All Rights Reserved by Emeka Enterprises LLC.<br>
+                        {% block terms %}
                         <div class="copyright-links"><a href="#">Terms of Use</a> / <a href="#">Privacy Policy</a></div>
+                        {% endblock %}
                     </div>
 
                     <div class="col_half col_last tright">
@@ -1220,48 +1204,20 @@
                                 <i class="icon-twitter"></i>
                                 <i class="icon-twitter"></i>
                             </a>
-
-                            <a href="#" class="social-icon si-small si-borderless si-gplus">
-                                <i class="icon-gplus"></i>
-                                <i class="icon-gplus"></i>
-                            </a>
-
-                            <a href="#" class="social-icon si-small si-borderless si-pinterest">
-                                <i class="icon-pinterest"></i>
-                                <i class="icon-pinterest"></i>
-                            </a>
-
-                            <a href="#" class="social-icon si-small si-borderless si-vimeo">
-                                <i class="icon-vimeo"></i>
-                                <i class="icon-vimeo"></i>
-                            </a>
-
-                            <a href="#" class="social-icon si-small si-borderless si-github">
-                                <i class="icon-github"></i>
-                                <i class="icon-github"></i>
-                            </a>
-
-                            <a href="#" class="social-icon si-small si-borderless si-yahoo">
-                                <i class="icon-yahoo"></i>
-                                <i class="icon-yahoo"></i>
-                            </a>
-
-                            <a href="#" class="social-icon si-small si-borderless si-linkedin">
-                                <i class="icon-linkedin"></i>
-                                <i class="icon-linkedin"></i>
-                            </a>
                         </div>
 
                         <div class="clear"></div>
 
-                        <i class="icon-envelope2"></i> info@canvas.com <span class="middot">&middot;</span> <i class="icon-headphones"></i> +91-11-6541-6369 <span class="middot">&middot;</span> <i class="icon-skype2"></i> CanvasOnSkype
+                        <i class="icon-envelope2"></i> cj@emekaenterprises.com <span class="middot">&middot;</span> <i class="icon-headphones"></i> 214-566-8710 <span class="middot">&middot;</span>
                     </div>
 
                 </div>
 
             </div><!-- #copyrights end -->
+            {% endblock %}
 
         </footer><!-- #footer end -->
+        {% endblock %}
 
     </div><!-- #wrapper end -->
 
@@ -1269,9 +1225,11 @@
     ============================================= -->
     <div id="gotoTop" class="icon-angle-up"></div>
 
+    {% block footer-scripts %}
     <!-- Footer Scripts
     ============================================= -->
     <script type="text/javascript" src="{% static 'js/functions.js' %}"></script>
+    {% endblock %}
 
 </body>
 </html>

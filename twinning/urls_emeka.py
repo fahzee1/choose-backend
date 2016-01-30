@@ -8,6 +8,7 @@ admin.site.site_header = 'Emeka Enterprises LLC Admin'
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.home,name='home'),
+    url(r'^career$', views.career,name='career'),
 
 ]
 

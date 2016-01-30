@@ -16,3 +16,9 @@ def home(request):
     else:
         return HttpResponseBadRequest()
 
+
+
+def career(request):
+    current_site = get_current_site(request)
+    if current_site.domain == 'emekaenterprises.com':
+        return render(request,'emeka/career.html',{'foo':'bar'})
