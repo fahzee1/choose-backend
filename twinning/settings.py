@@ -202,7 +202,7 @@ CUMULUS = {
 }
 
 DEFAULT_FILE_STORAGE = 'cumulus.storage.CumulusStorage'
-#STATICFILES_STORAGE = 'cumulus.storage.CumulusStaticStorage'
+STATICFILES_STORAGE = 'cumulus.storage.CumulusStaticStorage'
 
 # QuestionTypes
 QUESTION_TYPE_A_B = 100
