@@ -198,7 +198,12 @@ CUMULUS = {
     'CNAMES':{
         'http://d4d4fa7cf0b2ba9ea99e-9f937d12f8afada8e7f4b412171af17f.r43.cf1.rackcdn.com':'http://images.trychoose.com'
     },
-    'GZIP_CONTENT_TYPES':['image/jpeg','text/css','image/png']
+    'GZIP_CONTENT_TYPES':['image/jpeg','text/css','image/png'],
+    'HEADERS':(
+        (r'.*\.(eot|otf|woff|ttf)$', {
+            'Access-Control-Allow-Origin': '*'
+        }),
+    )
 }
 
 DEFAULT_FILE_STORAGE = 'cumulus.storage.CumulusStorage'
