@@ -26,7 +26,7 @@ SECRET_KEY = '5n076m!!(kjy3#q@-ub9)t!e+gye0%sj$zb274=uran18%7mg3'
 DEBUG = False
 
 SITE_ID = 1
-ALLOWED_HOSTS = ['192.168.200.187:8000','162.243.170.41','api.trychoose.com','www.api.trychoose.com']
+ALLOWED_HOSTS = ['192.168.200.187:8000','162.243.170.41','api.trychoose.com','www.api.trychoose.com','www.teamdestinyfoundation.com']
 
 
 # Application definition
