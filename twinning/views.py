@@ -1,21 +1,29 @@
 import pdb
+import logging
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 
+logger = logging.getLogger(__name__)
 
 def home(request):
     current_site = get_current_site(request)
+    logger.info(current_site)
+
     if current_site.domain == 'api.trychoose.com':
+        logger.info('on site choose')
         return HttpResponse()
 
     elif current_site.domain == 'emekaenterprises.com':
+        logger.info('on site emekaenterprises')
         return render(request,'emeka/index.html',{'foo':'bar'})
 
     elif current_site.domain == 'teamdestinyfoundation.com':
+        logger.info('on site teamdestinyfoundation')
         return render(request,'destiny/index.html',{'foo':'bar'})
     else:
+        logger.info('no site its a bad request')
         return HttpResponseBadRequest()
 
 
