@@ -200,7 +200,7 @@ CUMULUS = {
     },
     'GZIP_CONTENT_TYPES':['image/jpeg','text/css','image/png'],
     'HEADERS':(
-        (r'.*\.(eot|otf|woff|ttf)$', {
+        (r'.*\.(eot|otf|woff|ttf|css|js)$', {
             'Access-Control-Allow-Origin': '*'
         }),
     )
@@ -208,7 +208,7 @@ CUMULUS = {
 }
 
 DEFAULT_FILE_STORAGE = 'cumulus.storage.CumulusStorage'
-STATICFILES_STORAGE = 'cumulus.storage.CumulusStaticStorage'
+#STATICFILES_STORAGE = 'cumulus.storage.CumulusStaticStorage'
 
 # QuestionTypes
 QUESTION_TYPE_A_B = 100
