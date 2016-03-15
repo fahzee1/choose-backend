@@ -204,6 +204,7 @@ CUMULUS = {
             'Access-Control-Allow-Origin': '*'
         }),
     )
+    
 }
 
 DEFAULT_FILE_STORAGE = 'cumulus.storage.CumulusStorage'

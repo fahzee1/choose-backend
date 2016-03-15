@@ -1,0 +1,101 @@
+.navbar{
+	border-bottom:4px solid #00D089;
+}
+
+.nav > li > a:hover {
+    background-color: #00D089;
+}
+
+.nav > li.current a{
+    background-color: #00D089;	
+}
+
+.slider_title{
+	border-left:2px #00D089 solid;
+}
+
+#pageLoad{
+	background:url(../images/circle4.png);
+}
+
+.top_btn{
+	background:#00D089;
+}
+
+.heading span{
+	color: #00D089;
+}
+
+.welcome_txt span{
+	background: #00D089;
+}
+
+.b1, .b3, .b22{
+	background:#00D089;
+}
+
+.publication .fa{
+	color:#00D089;
+}
+
+.publication h5{
+	color:#00D089;
+}
+
+.education .fa{
+	color:#00D089;
+}
+
+#myTab1.nav-tabs > li.active > a, #myTab1.nav-tabs > li.active > a:hover, 
+#myTab1.nav-tabs > li.active > a:focus, #myTab1.nav-tabs > li > a:hover, 
+#myTab1.nav-tabs > li > a:focus{
+	background:#00D089;
+}
+
+.how_can_you_help{
+	background:RGBA(0, 208, 137, 0.9);
+}
+
+.act .fa{
+	color:#00D089;
+}
+
+.carousel-indicators .active{
+	background:#00D089;
+}
+
+.btn-danger {
+    background-color: #00D089;
+}
+
+#signup .button{
+	background:#00D089;
+}
+
+.recent_news h4{
+	color:#00D089;
+}
+
+p.readmore a{
+	color:#00D089;
+}
+
+.team a:hover .fa{
+	color:#00D089;
+}
+
+.tt-grid-wrapper nav a.tt-current {
+	background:#00D089;
+}
+
+.stories .bx-wrapper .bx-pager.bx-default-pager a.active, .stories .bx-wrapper .bx-pager.bx-default-pager a:hover{
+	background:#00D089;	
+}
+
+.contact{
+	background:RGBA(0, 208, 137, 0.9);
+}
+
+.footer{
+	background:#00D089;
+}

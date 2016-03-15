@@ -1,0 +1,93 @@
+.navbar{
+	border-bottom:4px solid #EA5343;
+}
+
+.nav > li > a:hover {
+    background-color: #EA5343;
+}
+
+.nav > li.current a{
+    background-color: #EA5343;	
+}
+
+.slider_title{
+	border-left:2px #EA5343 solid;
+}
+
+#pageLoad{
+	background:url(../images/circle2.png);
+}
+
+.top_btn{
+	background:#EA5343;
+}
+
+.heading span{
+	color: #EA5343;
+}
+
+.welcome_txt span{
+	background: #EA5343;
+}
+
+.b1, .b3, .b22{
+	background:#EA5343;
+}
+
+.publication .fa{
+	color:#EA5343;
+}
+
+.education .fa{
+	color:#EA5343;
+}
+
+#myTab1.nav-tabs > li.active > a, #myTab1.nav-tabs > li.active > a:hover, 
+#myTab1.nav-tabs > li.active > a:focus, #myTab1.nav-tabs > li > a:hover, 
+#myTab1.nav-tabs > li > a:focus{
+	background:#EA5343;
+}
+
+.how_can_you_help{
+	background:RGBA(234, 83, 67, 0.8);
+}
+
+.act .fa{
+	color:#EA5343;
+}
+
+.carousel-indicators .active{
+	background:#EA5343;
+}
+
+.btn-danger {
+    background-color: #EA5343;
+}
+
+#signup .button{
+	background:#EA5343;
+}
+
+.tt-grid-wrapper nav a.tt-current {
+	background:#EA5343;
+}
+
+.recent_news h4{
+	color:#EA5343;
+}
+
+p.readmore a{
+	color:#EA5343;
+}
+
+.team a:hover .fa{
+	color:#EA5343;
+}
+
+.contact{
+	background:RGBA(234, 83, 67, 0.8);
+}
+
+.footer{
+	background:#EA5343;
+}
