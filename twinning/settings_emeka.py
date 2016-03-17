@@ -1,7 +1,7 @@
 from settings import *
 
 SITE_ID = 2
-ALLOWED_HOSTS = ['emekaenterprises.com']
+ALLOWED_HOSTS = ['emekaenterprises.com','www.emekaenterprises.com']
 
 ROOT_URLCONF = 'twinning.urls_emeka'
 

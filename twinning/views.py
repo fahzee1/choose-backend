@@ -9,21 +9,21 @@ logger = logging.getLogger(__name__)
 
 def home(request):
     current_site = get_current_site(request)
-    logger.info(current_site)
+    logger.debug(current_site)
 
     if current_site.domain == 'api.trychoose.com':
-        logger.info('on site choose')
+        logger.debug('on site choose')
         return HttpResponse()
 
     elif current_site.domain == 'emekaenterprises.com':
-        logger.info('on site emekaenterprises')
+        logger.debug('on site emekaenterprises')
         return render(request,'emeka/index.html',{'foo':'bar'})
 
     elif current_site.domain == 'teamdestinyfoundation.com':
-        logger.info('on site teamdestinyfoundation')
+        logger.debug('on site teamdestinyfoundation')
         return render(request,'destiny/index.html',{'foo':'bar'})
     else:
-        logger.info('no site its a bad request')
+        logger.debug('no site its a bad request')
         return HttpResponseBadRequest()
 
 
