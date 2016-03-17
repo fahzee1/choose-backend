@@ -30,7 +30,7 @@
 				inherit_height_from: '.top'
 			});			
 				
-            jQuery("#pageLoad").animateNumbers(768, true, 2000);
+            jQuery("#pageLoad").animateNumbers(100, true, 2000);
 						
 			jQuery('.about_us_bg').parallax("50%", 0.2);
 			jQuery('.how_can_you_help_bg').parallax("50%", 0.2);

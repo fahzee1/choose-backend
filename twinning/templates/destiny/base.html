@@ -9,7 +9,7 @@
         <link rel="shortcut icon" href="images/ico/favicon.png">
         <link rel="shortcut icon" type="image/x-icon" href="images/ico/favicon.ico">
 
-        <title>Borno - Education for all</title>
+        <title>Team Destiny Foundation</title>
         
         <!-- Bootstrap core CSS -->
         <link href="{% static 'destiny/assets/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
@@ -18,7 +18,7 @@
         <link href="{% static 'destiny/css/style.css' %}" rel="stylesheet">
         
         <!-- color schema -->
-        <link href="{% static 'destiny/css/color-4.css' %}" rel="stylesheet" id="layoutstyle">     
+        <link href="{% static 'destiny/css/color-1.css' %}" rel="stylesheet" id="layoutstyle">     
         
         <!-- google font for title -->
         <link href="{% static 'destiny/css/google-font.css' %}" rel="stylesheet" id="googlefont">      
@@ -53,9 +53,9 @@
     
     <div id="slides">
         <div class="slides-container">
-          <img src="{% static 'destiny/images/slider/slider3.jpg' %}" alt="slider1">
-          <img src="{% static 'destiny/images/slider/slider2.jpg' %}" alt="slider2">
-          <img src="{% static 'destiny/images/slider/slider1.jpg' %}" alt="slider3">
+          <img src="{% static 'destiny/images/africa/africankid.jpg' %}" alt="slider1">
+          <img src="{% static 'destiny/images/africa/africankid1.jpg' %}" alt="slider2">
+          <img src="{% static 'destiny/images/africa/africankid2.jpg' %}" alt="slider3">
         </div>
     </div>  
     
@@ -65,17 +65,20 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 text-center animate_left">
+                        {% comment %}
                         <div class="logo"><img src="{% static 'destiny/images/logo.png' %}" alt="logo"></div>
-                        <span class="subtitle">Education for all.</span>
+                        {% endcomment %}
+
+                        <span class="subtitle">Helping those less fortunate.</span>
                     </div>                  
                     <div class="col-md-9 slider_title">
-                        <h2 class="animate_top">Supporting <span id="pageLoad">0</span> child education, and counting...</h2>
+                        <h2 class="animate_top">Supporting <span id="pageLoad">0</span> children and counting...</h2>
                         <!--<a class="top_btn" href="#">Donate Now</a>-->
                         
                         <div class="animate_bottom">
                             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                                 <input type="hidden" name="cmd" value="_donations">
-                                <input type="hidden" name="business" value="eh.rajib@gmail.com">
+                                <input type="hidden" name="business" value="genesiscareer@aol.com">
                                 <input type="hidden" name="lc" value="US">
                                 <input type="hidden" name="item_name" value="theweblab">
                                 <input type="hidden" name="no_note" value="0">
@@ -103,7 +106,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#"><img src="{% static 'destiny/images/logo_s_w.png' %}" alt="logo"></a>
+              <a class="navbar-brand nav-title" href="#">Destiny Foundation</a>
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
@@ -124,7 +127,7 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10 welcome_txt text-center animate_bottom">
-                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the <span>1500s</span>, when an unknown <span>printer</span> took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining unchanged. It was <span>popularised</span> in the 1960s.
+                    <p>Safe and <span>stable</span> homes are the foundation of <span>healthy</span> families and sustainable communities. But owning a home is not possible for many of our <span>neighbors</span>. With your help, we can change that.
                     </p>
                 </div>
                 <div class="col-md-1"></div>
@@ -136,18 +139,18 @@
     <div class="education" id="education">
         <div class="container text-center">
             <div class="row">
-                <div class="col-md-12 heading dark animate_top">Helping children to <span>educate</span></div>
+                <div class="col-md-12 heading dark animate_top">Helping and educating <span>families</span></div>
             </div>
             <div class="row">
                 <div class="col-md-4 b1">
                     <i class="fa fa-heart"></i>
                     <h3 class="animate_top">Helping Children</h3>
-                    <p class="animate_bottom">Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>  
+                    <p class="animate_bottom">We strive to help our lovely children of Africa. Help us ensure that we have the resources to continue to let these kids strive.</p>  
                 </div>
                 <div class="col-md-4 b2">
                     <i class="fa fa-star"></i>
                     <h3 class="animate_top">Ensuring better life</h3>
-                    <p class="animate_bottom">Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>               
+                    <p class="animate_bottom">Team Destiny Foundation aims to improve the living conditions for families living in third world countries.</p>               
                 </div>
                 <div class="col-md-4 b3">
                     <i class="fa fa-pencil"></i>
@@ -181,10 +184,10 @@
             <div class="row text-center">
                 <div class="col-md-1"></div>
                 <div class="col-md-7 animate_left">
-                    <h3>Lorem ipsum duis mollis est non commodo luctus nisi erat porttitor.</h3>
+                    <h3>We have alot of surprises in store so stay tuned!</h3>
                 </div>
                 <div class="col-md-3 animate_right">
-                    <button class="top_btn">Button</button>
+                    <button class="top_btn">See more</button>
                 </div>
                 <div class="col-md-1"></div>
             </div><!-- End call action text -->
@@ -302,7 +305,7 @@
                                 
                                 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                                 <input type="hidden" name="cmd" value="_donations">
-                                <input type="hidden" name="business" value="eh.rajib@gmail.com">
+                                <input type="hidden" name="business" value="genesiscareer@aol.com">
                                 <input type="hidden" name="lc" value="US">
                                 <input type="hidden" name="item_name" value="theweblab">
                                 <input type="hidden" name="no_note" value="0">
@@ -386,7 +389,7 @@
             
             <div class="row">
                 <div class="col-md-12 text-center heading dark animate_top">
-                    Who are behind <span>Borno</span>
+                    Who's behind <span>Destiny Foundation</span>
                 </div>
             </div>
             
@@ -395,8 +398,8 @@
                     <img src="{% static 'destiny/images/organizers/org1.jpg' %}" alt="img">
                 </div>
                 <div class="col-md-9 animate_right">
-                    <h3>Richard Roe</h3>
-                    <p>President, Borno, Inc.</p>
+                    <h3>Kelly Ogbuehi</h3>
+                    <p>President and Founder, Destiny Foundation, Inc.</p>
                     <p>Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte. Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>
                     <ul>
                         <li><a href=""><i class="fa fa-twitter"></i></a></li>   
@@ -475,6 +478,7 @@
         </div>      
     </div>
     
+    {% block image-gallery %}
     <!-- Image gallery -->
     <div class="gallery-bg parallax" id="gallery">  
         <div class="gallery">
@@ -532,7 +536,8 @@
                 </div>
             </section>
         </div>  
-    </div>  
+    </div> 
+    {% endblock %} 
 
     <!-- Recent Programs -->
     <div class="recent_news" id="recent_news">
@@ -682,7 +687,7 @@
     <div class="footer">
         <div class="container">
             <div class="row text-center">
-                <div class="col-md-12"><p>Copyright &copy; 2014, All rights reserved by TheWebLab</p></div>
+                <div class="col-md-12"><p>Copyright &copy; 2016, All rights reserved by Destiny Foundation</p></div>
             </div>
         </div>
     </div>
