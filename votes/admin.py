@@ -11,11 +11,11 @@ class CardListInline(admin.TabularInline):
 
 
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('question','string_question_type','image_link','id','user','displayed_in')
+    list_display = ('question','string_question_type','image_link','id','user','displayed_in','created')
     list_display_links = ('question',)
     list_filter = ('tags','created_by','user__username')
     search_fields = ('question','user__username')
-    ordering = ('created',)
+    ordering = ('-created',)
     filter_horizontal = ('tags',)
     fields = (('user','created_by'),
               'image_link',
