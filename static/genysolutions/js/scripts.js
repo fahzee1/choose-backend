@@ -55,22 +55,23 @@
 
   // FORM VALIDATION
 
-  $(".subscribe-form input").jqBootstrapValidation({
+  $(".subscribe-form input,#subscribe-form2 input").jqBootstrapValidation({
     preventSubmit: true,
     submitSuccess: function($form, event) {
       event.preventDefault(); // prevent default submit behaviour
-      var email = $("input#sub-email").val();
+      var email = $form.find("input#sub-email").val();
+
       $.ajax({
         url:'/submit/',
         type:'POST',
         data:{email:email,subscribe:1},
         success: function() {
-          $('#subscribe-success').html("<div class='alert alert-success'>");
-          $('#subscribe-success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+          $('#subscribe-success, #subscribe-success2').html("<div class='alert alert-success'>");
+          $('#subscribe-success > .alert-success, #subscribe-success2 > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
             .append("</button>");
-          $('#subscribe-success > .alert-success')
+          $('#subscribe-success > .alert-success, #subscribe-success2 > .alert-success')
             .append("<strong>Your message has been sent. </strong>");
-          $('#subscribe-success > .alert-success')
+          $('#subscribe-success > .alert-success, #subscribe-success2 > .alert-success')
             .append('</div>');
         }
       })

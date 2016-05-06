@@ -40,7 +40,6 @@ def career(request):
         return render(request,'emeka/career.html',{'foo':'bar'})
 
 def submit(request):
-    pdb.set_trace()
     if request.is_ajax():
         subscribe = request.POST.get('subscribe',0)
         email = request.POST.get('email','No email')

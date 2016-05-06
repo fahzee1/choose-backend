@@ -18,13 +18,16 @@
         <link href="{% static 'genysolutions/css/colors/green.css' %}" class="css-color" rel="stylesheet">
 
         <!-- FAVICON  -->
-        <link rel="icon" href="{% static 'genysolutions/img/favicon.ico' %}">
+        <link rel="shortcut icon" href="{% static 'genysolutions/img/favicon.ico' %}" type="image/x-icon">
+        <link rel="icon" href="{% static 'genysolutions/img/favicon.ico' %}" type="image/x-icon">
     </head>
     <body>
         <!-- PRELOADER -->
         <div id="preloader">
             <div class="spinner"></div>
         </div>
+
+        {% block nav %}
         <!-- MAIN NAV -->
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
@@ -44,10 +47,10 @@
                             <a class="page-scroll" href="#services">Services</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="#features">Features</a>
-                        </li>
-                        <li>
                             <a class="page-scroll" href="#video">Video</a>
+                        </li>
+                         <li>
+                            <a class="page-scroll" href="#solutions">Solutions</a>
                         </li>
                         <li>
                             <a class="page-scroll" href="#pricing">Pricing</a>
@@ -67,6 +70,9 @@
             </div>
         </nav>
         <!-- END MAIN NAV -->
+        {% endblock %}
+
+        {% block header %}
         <!-- HEADER -->
         <header id="header">
             <div class="container">
@@ -86,6 +92,7 @@
             <div id="particles-js"></div>
         </header>
         <!-- END HEADER -->
+        {% endblock %}
 
         {% block services %}
         <!-- SERVICES -->
@@ -94,32 +101,32 @@
                 <div class="row">
                     <!-- SERVICES HEADING -->
                     <div class="col-lg-12 text-center">
-                        <h2 class="section-heading">Modern tools</h2>
+                        <h2 class="section-heading">Services Reimagined</h2>
                         <span class="separator"></span>
-                        <p class="section-subheading ">Partnership or temporary organization perfectly designed.</p>
+                        <p class="section-subheading ">Simplify your life and let us take care of your needs.</p>
                     </div>
                     <!-- END SERVICES HEADING -->
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <i class="nc-icon-outline heart"></i>
-                        <h4 class="service-heading">Boost performance</h4>
-                        <p class="">GRID displays your content in an eye-catching way and enables customizable internal distribution.</p>
+                        <i class="nc-icon-outline pc"></i>
+                        <h4 class="service-heading">Websites</h4>
+                        <p class="">HTML, CSS, and JS based websites for your custom needs. We also have premade templates for you to choose from.</p>
                     </div>
                     <div class="col-md-3">
                         <i class="nc-icon-outline keyboard"></i>
-                        <h4 class="service-heading">Higly customizable</h4>
-                        <p class="">Key features flexible layouts and themes to customize your content's unique look. </p>
+                        <h4 class="service-heading">Apps</h4>
+                        <p class="">iPhone app? Android app? Don't worry we have you covered on both platforms. Our team of engineers can get started on any type of project.</p>
                     </div>
                     <div class="col-md-3">
                         <i class="nc-icon-outline sign"></i>
-                        <h4 class="service-heading">Simplified workflow</h4>
-                        <p class="">Key is the first-ever truly team-friendly media CMS. Collaborating on content is efficient.</p>
+                        <h4 class="service-heading">UI/UX</h4>
+                        <p class="">Key to a great looking app that your users will love is getting the UI/UX just right and we have your back.</p>
                     </div>
                     <div class="col-md-3 last">
-                        <i class="nc-icon-outline pc"></i>
-                        <h4 class="service-heading">Cross platform</h4>
-                        <p class="">Credibly innovate granular internal or "organic" sources whereas high standards in web-readiness.</p>
+                        <i class="nc-icon-outline board"></i>
+                        <h4 class="service-heading">Custom Branding</h4>
+                        <p class="">Our designers will work with you to deliver branding thats suited for what you're trying to convey.</p>
                     </div>
                 </div>
             </div>
@@ -127,6 +134,7 @@
         <!-- END SERVICES -->
         {% endblock %}
 
+        {% block features %}
         <!-- FEATURES -->
         <section id="features" class="gray-bg">
             <div class="container">
@@ -192,6 +200,9 @@
             </div>
         </section>
         <!-- END FEATURES -->
+        {% endblock %}
+
+        {% block video %}
         <!-- VIDEO -->
         <section id="video" class="parallax">
             <div class="overlay parallax"></div>
@@ -211,6 +222,7 @@
                         <img src="{% static 'genysolutions/img/video/video.png' %}" class="video-image" alt="">
                         <span class="play-video"><span class="fa fa-play"></span></span></a>
                     </div>
+                    {% block video-socials %}
                     <!-- VIDEO SOCIALS -->
                     <div class="video-socials">
                         <a href="#"><span class="fa fa-facebook"></span></a>
@@ -218,6 +230,7 @@
                         <a href="#"><span class="fa fa-linkedin"></span></a>
                     </div>
                     <!-- END VIDEO SOCIALS -->
+                    {% endblock %}
                 </div>
             </div>
         </section>
@@ -231,6 +244,9 @@
         </div>
         <!-- END VIDEO POPUP -->
         <!-- END VIDEO -->
+        {% endblock %}
+
+        {% block solutions %}
         <!-- SOLUTIONS -->
         <section id="solutions" class="gray-bg">
             <div class="container">
@@ -239,7 +255,7 @@
                     <div class="col-lg-12 text-center">
                         <h2 class="section-heading">Our solutions </h2>
                         <span class="separator"></span>
-                        <p class="section-subheading ">Sed risus feugiat fusce eu sit conubia venenatis dolor</p>
+                        <p class="section-subheading ">A few of our custom solutiions</p>
                     </div>
                     <!-- END SOLUTIONS HEADING -->
                 </div>
@@ -254,8 +270,8 @@
                     <div class="col-md-4">
                         <div class="chart" data-percent="75">75<span class="percent">%</span></div>
                         <div class="chart-content">
-                            <i class="nc-icon-outline cart"></i>
-                            <h4 class="service-heading">Ecommerce Marketing</h4>
+                            <i class="nc-icon-outline chat"></i>
+                            <h4 class="service-heading">Brand Marketing</h4>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -269,6 +285,9 @@
             </div>
         </section>
         <!-- END SOLUTIONS -->
+        {% endblock %}
+
+        {% block pricing %}
         <!-- PRICING TABLES -->
         <section id="pricing">
             <div class="container">
@@ -277,7 +296,7 @@
                     <div class="col-lg-12 text-center">
                         <h2 class="section-heading">Our pricing</h2>
                         <span class="separator"></span>
-                        <p class="section-subheading ">Deserunt nesciunt sed molestiae quos, dolor eaque quis facilis tempora consequuntu.</p>
+                        <p class="section-subheading ">Doesn't get much better then this.</p>
                     </div>
                     <!-- END PRICING TABLES HEADING -->
                 </div>
@@ -288,19 +307,18 @@
                         <div class="row pricing">
                             <div class="col-lg-3 col-md-3 col-sm-3" >
                                 <div class="row">
-                                    <span class="pricing-price"><span class="currency">$</span>20</span>
+                                    <span class="pricing-price"><span class="currency">$</span>100</span>
                                     <span class="pricing-time">/mo</span>
                                     <div class="billing-time">billed annually</div>
                                 </div>
                             </div>
-                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>CRM Auto-Sync</span></span></div>
-                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Click-to-Call Back from the web</span></span></div>
-                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Track accrued energy costs</span></span></div>
-                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Power and Predictive Dialing</span></span></div>
-                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Speech & text Analytics</span></span></div>
-                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Sales Acceleration Platform</span></span></div>
+                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Email Support</span></span></div>
+                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Custom Templates</span></span></div>
+                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Progress Tracking</span></span></div>
+                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Code Delivery</span></span></div>
+                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Analytics</span></span></div>
                             <div class="pricing-row button-container">
-                                <a href="#" class="secondary-button secondary-button-inverse">Get Started</a>
+                                <a class="page-scroll secondary-button secondary-button-inverse" href="#contact">Get Started</a>
                             </div>
                         </div>
                     </div>
@@ -310,7 +328,7 @@
                         <div class="row pricing active">
                             <div class="col-lg-3 col-md-3 col-sm-3" >
                                 <div class="row">
-                                    <span class="pricing-price"><span class="currency">$</span>50</span>
+                                    <span class="pricing-price"><span class="currency">$</span>200</span>
                                     <span class="pricing-time">/mo</span>
                                     <div class="billing-time">billed annually</div>
                                 </div>
@@ -322,7 +340,7 @@
                             <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Disaster Recovery</span></span></div>
                             <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Tight IVR/ACD Integration</span></span></div>
                             <div class="pricing-row button-container">
-                                <a href="#" class="secondary-button">Get Started</a>
+                                <a class="page-scroll secondary-button" href="#contact">Get Started</a>
                             </div>
                         </div>
                     </div>
@@ -332,7 +350,7 @@
                         <div class="row pricing">
                             <div class="col-lg-3 col-md-3 col-sm-3" >
                                 <div class="row">
-                                    <span class="pricing-price"><span class="currency">$</span>90</span>
+                                    <span class="pricing-price"><span class="currency">$</span>500</span>
                                     <span class="pricing-time">/mo</span>
                                     <div class="billing-time">billed annually</div>
                                 </div>
@@ -341,10 +359,9 @@
                             <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Quality & Customer Experience </span></span></div>
                             <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Dedicated account manager</span></span></div>
                             <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Power and Predictive Dialing</span></span></div>
-                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Configurable Call Recording</span></span></div>
-                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Track accrued energy costs</span></span></div>
+                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Call center support</span></span></div>
                             <div class="pricing-row button-container">
-                                <a href="#" class="secondary-button secondary-button-inverse">Get Started</a>
+                                <a class="page-scroll secondary-button secondary-button-inverse" href="#contact">Get Started</a>
                             </div>
                         </div>
                     </div>
@@ -352,6 +369,9 @@
             </div>
         </section>
         <!-- PRICING TABLES -->
+        {% endblock %}
+
+        {% block testimonials %}
         <!-- TESTIMONIALS -->
         <section id="testimonials" class="gray-bg">
             <div class="container">
@@ -359,7 +379,7 @@
                     <div class="slider">
                         <!-- TESTIMONIALS 1 -->
                         <div class="tt-content">
-                            <h3><span class="tt-quote">“</span><span class="tt-quote tt-quote-right">”</span>KeySoft is really helping all of us to make collaboration a differentiating factor to win is really helping all of us.</h3>
+                            <h3><span class="tt-quote">“</span><span class="tt-quote tt-quote-right">”</span>Gen Y Solutions really helped all of us make collaboration a differentiating factor to help our company compete.</h3>
                             <div class="tt-container">
                                 <h4 >Antony Casalena</h4>
                                 <span class="content">Vice president, IQTeam</span>
@@ -367,32 +387,37 @@
                         </div>
                         <!-- TESTIMONIALS 2 -->
                         <div class="tt-content">
-                            <h3 ><span class="tt-quote">“</span><span class="tt-quote tt-quote-right">”</span>KeySoft is really helping all of us to make collaboration a differentiating factor to win is really helping all of us.</h3>
+                            <h3 ><span class="tt-quote">“</span><span class="tt-quote tt-quote-right">”</span>Working with their team was a very smooth process and we were happy with the work they did.</h3>
                             <div class="tt-container">
-                                <h4 >Antony Casalena</h4>
-                                <span class="content">Vice president, IQTeam</span>
+                                <h4 >Matthew Wizon</h4>
+                                <span class="content">CTO, Crew</span>
                             </div>
                         </div>
                         <!-- TESTIMONIALS 3 -->
                         <div class="tt-content">
-                            <h3 ><span class="tt-quote">“</span><span class="tt-quote tt-quote-right">”</span>KeySoft is really helping all of us to make collaboration a differentiating factor to win is really helping all of us.</h3>
+                            <h3 ><span class="tt-quote">“</span><span class="tt-quote tt-quote-right">”</span>Gen Y Solutions was a great team to subcontract some of our extra work to. Will be working with them again.</h3>
                             <div class="tt-container">
-                                <h4 >Antony Casalena</h4>
-                                <span class="content">Vice president, IQTeam</span>
+                                <h4 >Drew Perry</h4>
+                                <span class="content">President, iTexico</span>
                             </div>
                         </div>
                     </div>
+                    {% block testimonials-images %}
                     <!-- TESTIMONIALS IMAGE CAPTIONS -->
                     <div class="tt-images">
                         <div class="tt-image"><img width="80" height="80" src="{% static 'genysolutions/img/testimonials/testimonial1.png' %}" alt="team"></div>
-                        <div class="tt-image"><img width="80" height="80" src="{% static 'genysolutions/img/testimonials/testimonial2.png' %}" alt="team"></div>
-                        <div class="tt-image"><img width="80" height="80" src="{% static 'genysolutions/img/testimonials/testimonial3.png' %}" alt="team"></div>
+                        <div class="tt-image"><img width="80" height="80" src="{% static 'genysolutions/img/testimonials/testimonial1.png' %}" alt="team"></div>
+                        <div class="tt-image"><img width="80" height="80" src="{% static 'genysolutions/img/testimonials/testimonial1.png' %}" alt="team"></div>
                     </div>
                     <!-- END TESTIMONIALS IMAGE CAPTIONS -->
+                    {% endblock %}
                 </div>
             </div>
         </section>
         <!-- END TESTIMONIALS -->
+        {% endblock %}
+
+        {% block team %}
         <!-- TEAM -->
         <section id="team">
             <div class="container">
@@ -416,9 +441,9 @@
                                 <a href="#"><span class="fa fa-linkedin"></span></a>
                             </div>
                             <div class="team-content">
-                                <h5>Jerry Mack</h5>
-                                <span class="team-subtitle">Web Developer</span>
-                                <p>He enjoys the finer details of a project, considering every stage of his.</p>
+                                <h5>CJ Ogbuehi</h5>
+                                <span class="team-subtitle">Co-Founder/Developer</span>
+                                <p>Sports fan and food fanatic who dreams of quaility code</p>
                                 <span class="triangle"></span>
                             </div>
                         </div>
@@ -427,9 +452,9 @@
                     <div class="col-md-4 team-wrapper">
                         <div class="row team-member team-member-down">
                             <div class="team-content">
-                                <h5>Anna Shaw</h5>
-                                <span class="team-subtitle">Project Manager</span>
-                                <p>He enjoys the finer details of a project, considering every stage of her.</p>
+                                <h5>Eric Smith</h5>
+                                <span class="team-subtitle">Co-Founder/Developer</span>
+                                <p>Enjoys solving hard problems that require elegant solutions</p>
                                 <span class="triangle"></span>
                             </div>
                             <div class="team-socials">
@@ -437,7 +462,7 @@
                                 <a href="#"><span class="fa fa-twitter"></span></a>
                                 <a href="#"><span class="fa fa-linkedin"></span></a>
                             </div>
-                            <img src="{% static 'genysolutions/img/team/team2.jpg' %}" alt="">
+                            <img src="{% static 'genysolutions/img/team/team1.jpg' %}" alt="">
                         </div>
                     </div>
                     <!-- TEAM 3 -->
@@ -452,7 +477,7 @@
                             <div class="team-content">
                                 <h5>Leon Thompson</h5>
                                 <span class="team-subtitle">UX Designer</span>
-                                <p>She enjoys the finer details of a project, considering every stage of her.</p>
+                                <p>Thinks devil is in the details, enjoys the finer things in life.</p>
                                 <span class="triangle"></span>
                             </div>
                         </div>
@@ -461,6 +486,9 @@
             </div>
         </section>
         <!-- END TEAM -->
+        {% endblock %}
+
+        {% block clients %}
         <!-- CLIENTS -->
         <section id="clients" class="gray-bg">
             <div class="container">
@@ -499,20 +527,26 @@
             </div>
         </section>
         <!-- END CLIENTS -->
+        {% endblock %}
+
+        {% block subscribe %}
         <!-- SUBSCRIBE -->
         <section id="subscribe" class="parallax">
             <div class="container">
                 <div class="row">
                     <h3>Subscribe to receive free updates!</h3>
-                    <form class="subscribe-form">
-                        <input type="email"  placeholder="Your email adress"/>
+                    <form class="subscribe-form" id="subscribe-form">
+                        <input type="email" id="sub-email"  placeholder="Your email adress"/>
                         <button type="submit">Subscribe</button>
-                        <div id="subscribe-success"></div>
+                        <div id="subscribe-success2"></div>
                     </form>
                 </div>
             </div>
         </section>
         <!-- END SUBSCRIBE -->
+        {% endblock %}
+
+        {% block contact %}
         <!-- CONTACT -->
         <section id="contact">
             <div class="contact-map-container">
@@ -557,6 +591,9 @@
             </div>
         </section>
         <!-- END CONTACT -->
+        {% endblock %}
+
+        {% block footer %}
         <!-- FOOTER -->
         <footer>
             <div class="container">
@@ -573,10 +610,10 @@
                                     <a class="page-scroll" href="#services">Services</a>
                                 </li>
                                 <li class="">
-                                    <a class="page-scroll" href="#features">Features</a>
+                                    <a class="page-scroll" href="#video">Video</a>
                                 </li>
                                 <li class="">
-                                    <a class="page-scroll" href="#video">Video</a>
+                                    <a class="page-scroll" href="#solutions">Solutions</a>
                                 </li>
                                 <li class="">
                                     <a class="page-scroll" href="#pricing">Pricing</a>
@@ -593,7 +630,7 @@
                                     <a class="page-scroll" href="#"><span class="fa fa-phone"></span>214-566-8710</a>
                                 </li>
                                 <li class="">
-                                    <a class="page-scroll" href="#"><span class="fa fa-envelope"></span>fahzee1@gmail.com</a>
+                                    <a class="page-scroll" href="#"><span class="fa fa-envelope"></span>genysolutions1@gmail.com</a>
                                 </li>
                                 <li class="">
                                     <a class="page-scroll" href="#"><span class="fa fa-map-marker"></span>1203 Wilshire ct, Allen TX, 75002</a>
@@ -630,6 +667,8 @@
             </div>
         </footer>
         <!-- END FOOTER -->
+        {% endblock %}
+
         <!-- SCRIPTS -->
         <!-- jQuery & Bootstrap -->
         <script src="{% static 'genysolutions/js/jquery.js' %}"></script>
