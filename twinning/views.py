@@ -40,21 +40,28 @@ def career(request):
         return render(request,'emeka/career.html',{'foo':'bar'})
 
 def submit(request):
+    logger.debug('submitting form')
     if request.is_ajax():
+        logger.debug('form submit was ajax')
         subscribe = request.POST.get('subscribe',0)
         email = request.POST.get('email','No email')
 
         if not subscribe:
+            logger.debug('not subscribe')
             name = request.POST.get('name', 'No name')
             message = request.POST.get('message','No message')
 
             subject = 'New Email for Gen Y!'
             message = 'Name:%s\nEmail:%s\nMessage:%s\n' % (name,email,message)
         else:
+            logger.debug('is subscribe')
             subject = 'New subscriber for Gen Y!'
             message = 'Add %s to subscriber list' % email
 
+        logger.debug('sending mail to fahzee1')
         send_mail(subject,message,settings.SERVER_EMAIL,['fahzee1@gmail.com'],fail_silently=False)
+        logger.debug('mail send success')
         return HttpResponse('success')
     else:
+        logger.debug('mail send no good')
         return HttpResponseBadRequest('No good')
