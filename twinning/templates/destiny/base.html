@@ -53,9 +53,10 @@
     
     <div id="slides">
         <div class="slides-container">
-          <img src="{% static 'destiny/images/africa/africankid.jpg' %}" alt="slider1">
-          <img src="{% static 'destiny/images/africa/africankid1.jpg' %}" alt="slider2">
-          <img src="{% static 'destiny/images/africa/africankid2.jpg' %}" alt="slider3">
+          <img src="{% static 'destiny/images/africa/africa.jpg' %}" alt="slider1">
+          <img src="{% static 'destiny/images/africa/africa2-1.jpg' %}" alt="slider2">
+          <img src="{% static 'destiny/images/africa/africa3-2.jpg' %}" alt="slider3">
+          <img src="{% static 'destiny/images/africa/africa4-1.jpg' %}" alt="slider4">
         </div>
     </div>  
     
@@ -69,10 +70,10 @@
                         <div class="logo"><img src="{% static 'destiny/images/logo.png' %}" alt="logo"></div>
                         {% endcomment %}
 
-                        <span class="subtitle">Helping those less fortunate.</span>
+                        <span class="subtitle">Here to help Nigeria.</span>
                     </div>                  
                     <div class="col-md-9 slider_title">
-                        <h2 class="animate_top">Supporting <span id="pageLoad">0</span> children and counting...</h2>
+                        <h2 class="animate_top">Help us build 2 to 4 houses a year for those less fortunate.<span id="pageLoad" style="visibility:hidden;">0</span></h2>
                         <!--<a class="top_btn" href="#">Donate Now</a>-->
                         
                         <div class="animate_bottom">
@@ -112,8 +113,8 @@
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="#top">Home</a></li>
                 <li><a href="#history">History</a></li>
-                <li><a href="#goal">Our Goal</a></li>
-                <li><a href="#plans">Our Plans</a></li>
+                <li><a href="#success">Our Success</a></li>
+                <li><a href="#help">Help Us</a></li>
                 <li><a href="#team">Our Team</a></li> 
                 {% comment %}  
                 <li><a href="#gallery">Gallery</a></li> 
@@ -126,12 +127,12 @@
         </div>      
     </div>
     
-    
-        <div class="container">
+        <!-- Mini Goal-->
+        <div class="container" id="goal">
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10 welcome_txt text-center animate_bottom">
-                    <p>Safe and <span>stable</span> homes are the foundation of <span>healthy</span> families and sustainable communities. But owning a home is not possible for many of our <span>neighbors</span>. With your help, we can change that.
+                    <p>The goal of <span>Team Destiny Foundation</span> is to provide <span>adequate</span> housing and accomodations for <span>less fortunate</span> families in Nigeria.
                     </p>
                 </div>
                 <div class="col-md-1"></div>
@@ -139,11 +140,11 @@
         </div>
     
     
-    <!-- History -->
+    <!-- Video -->
     <div class="education" id="history">
         <div class="container text-center">
             <div class="row">
-                <div class="col-md-12 heading dark animate_top">Video with <span>Cedric</span> and <span>Kelly</span> here.</div>
+                <div class="col-md-12 heading dark animate_top">Video with <span>Cedric</span> and <span>Kelechi</span> here.</div>
             </div>
             <div class="row">
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/TvLd5GFlSho" frameborder="0" allowfullscreen></iframe>
@@ -151,37 +152,20 @@
             <div class="row">
                 <div class="col-md-4 b1">
                     <i class="fa fa-heart"></i>
-                    <h3 class="animate_top">Helping Children</h3>
-                    <p class="animate_bottom">We strive to help our lovely children of Africa. Help us ensure that we have the resources to continue to let these kids strive.</p>  
+                    <h3 class="animate_top">Helping Families</h3>
+                    <p class="animate_bottom">Everyday families live and wake up in conditions that are not acceptable, so we'll change that.</p>  
                 </div>
                 <div class="col-md-4 b2">
                     <i class="fa fa-star"></i>
-                    <h3 class="animate_top">Ensuring better life</h3>
-                    <p class="animate_bottom">Team Destiny Foundation aims to improve the living conditions for families living in third world countries.</p>               
+                    <h3 class="animate_top">Ensuring Better Life</h3>
+                    <p class="animate_bottom">Team Destiny Foundation aims to improve the living conditions for families living in Nigeria.</p>               
                 </div>
                 <div class="col-md-4 b3">
-                    <i class="fa fa-pencil"></i>
-                    <h3 class="animate_top">Education for all</h3>
-                    <p class="animate_bottom">Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>
+                    <i class="fa fa-thumbs-up"></i>
+                    <h3 class="animate_top">We Can Do It</h3>
+                    <p class="animate_bottom">With your help and help from our strong team. We can make building 2-4 houses a year a reality for families that really need it.</p>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 b21">
-                    <i class="fa fa-book"></i>
-                    <h3 class="animate_top">Helping Children</h3>
-                    <p class="animate_bottom">Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>  
-                </div>
-                <div class="col-md-4 b22">
-                    <i class="fa fa-check-circle-o"></i>
-                    <h3 class="animate_top">Ensuring better life</h3>
-                    <p class="animate_bottom">Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>               
-                </div>
-                <div class="col-md-4 b23">
-                    <i class="fa fa-edit"></i>
-                    <h3 class="animate_top">Education for all</h3>
-                    <p class="animate_bottom">Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>
-                </div>
-            </div>          
+            </div>         
         </div>
     </div>
     
@@ -191,10 +175,10 @@
             <div class="row text-center">
                 <div class="col-md-1"></div>
                 <div class="col-md-7 animate_left">
-                    <h3>We have alot of surprises in store so stay tuned!</h3>
+                    <h3>Be your brothers keeper</h3>
                 </div>
                 <div class="col-md-3 animate_right">
-                    <button class="top_btn">See more</button>
+                    <a href="#help"><button class="top_btn">Donate</button></a>
                 </div>
                 <div class="col-md-1"></div>
             </div><!-- End call action text -->
@@ -202,50 +186,45 @@
     </div>
     
     
-    <!-- Stories -->
-    <div class="stories" id="stories">
+    <!-- Successes -->
+    <div class="stories" id="success">
         <div class="container text-center">
             <div class="row">
-                <div class="col-md-12 heading dark animate_top">Our students and their <span>stories</span></div>
+                <div class="col-md-12 heading dark animate_top">Our successfully built <span>homes</span></div>
             </div>  
             <div class="row">
                 <div class="col-md-12">
                     <ul class="bxslider_story">
                         <li class="s1">
-                            <img src="{% static 'destiny/images/students/1.jpg' %}" alt="img">
-                            <h3 class="animate_top">Shoriful Hasan</h3>
+                            <img src="{% static 'destiny/images/homes/1.jpg' %}" alt="img">
+                            <h3 class="animate_top">Something, Lagos</h3>
                             <p class="animate_bottom">Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>
                         </li>
                     
                         <li class="s1">
-                            <img src="{% static 'destiny/images/students/2.jpg' %}" alt="img">
-                            <h3 class="animate_top">Sharifa Haq</h3>
+                            <img src="{% static 'destiny/images/homes/2.jpg' %}" alt="img">
+                            <h3 class="animate_top">Something, Abuja</h3>
                             <p class="animate_bottom">Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>
                         </li>           
                     
                         <li class="s1">
-                            <img src="{% static 'destiny/images/students/4.jpg' %}" alt="img">
-                            <h3 class="animate_top">Salma Khatun</h3>
+                            <img src="{% static 'destiny/images/homes/4.jpg' %}" alt="img">
+                            <h3 class="animate_top">Something, Salma</h3>
                             <p class="animate_bottom">Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>
                         </li>
                     
                         <li class="s1">
-                            <img src="{% static 'destiny/images/students/3.jpg' %}" alt="img">
-                            <h3 class="animate_top">Shoriful Hasan</h3>
+                            <img src="{% static 'destiny/images/homes/3.jpg' %}" alt="img">
+                            <h3 class="animate_top">Something, Egypt</h3>
                             <p class="animate_bottom">Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>
                         </li>
                     
                         <li class="s1">
-                            <img src="{% static 'destiny/images/students/5.jpg' %}" alt="img">
-                            <h3 class="animate_top">Karuk Khan</h3>
+                            <img src="{% static 'destiny/images/homes/5.jpg' %}" alt="img">
+                            <h3 class="animate_top">Something, Khan</h3>
                             <p class="animate_bottom">Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>
                         </li>           
-                    
-                        <li class="s1">
-                            <img src="{% static 'destiny/images/students/1.jpg' %}" alt="img">
-                            <h3 class="animate_top">Shorif Hasan</h3>
-                            <p class="animate_bottom">Lorem ipsum dolor sit amet, consecte tur adipiscing elit. Nulla ornare port titor diam, a accumsan justo laoreet.Lorem ipsum dolor sit amet, consecte.</p>
-                        </li>
+                
                     </ul>   
                 </div>      
             </div>
@@ -264,8 +243,7 @@
             
                 <ul class="nav nav-tabs responsive second text-center" id="myTab">
                   <li class="active"><a href="#tab1">Become a volunteer</a></li>
-                  <li><a href="#tab2">Donate</a></li>
-                  <li><a href="#tab3">Take responsibility of one student</a></li>                 
+                  <li><a href="#tab2">Donate</a></li>               
                 </ul>
 
                 <div class="tab-content responsive">
@@ -273,27 +251,27 @@
 
                         <div class="row">
                             <div class="col-md-6 animate_top">
-                                <h3><i class="fa fa-question-circle"></i>Lorem Ipsum has been the industry's standard?</h3>
+                                <h3><i class="fa fa-question-circle"></i>How do I become a volunteer?</h3>
                                 
-                                <p class="animate_bottom">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. </p>
+                                <p class="animate_bottom">Below you can find our contact info. Please reach out to Kelechi Ogbuehi our Founder and CEO.</p>
                             </div>
                             <div class="col-md-6 animate_top">
-                                <h3><i class="fa fa-question-circle"></i>Lorem Ipsum has been the industry's standard?</h3>
+                                <h3><i class="fa fa-question-circle"></i>Where does my donation go?</h3>
                                 
-                                <p class="animate_bottom">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                                <p class="animate_bottom">All funds raised for Team Destiny Foundation are used for the sole purpose of building homes in Nigeria. We have a professional team and board of directors who oversee all activities.</p>
                             </div>                  
                         </div>
                         
                         <div class="row">
                             <div class="col-md-6 animate_top">
-                                <h3><i class="fa fa-question-circle"></i>Lorem Ipsum has been the industry's standard?</h3>
+                                <h3><i class="fa fa-question-circle"></i>Can I get photos and videos of homes being built?</h3>
                                 
-                                <p class="animate_bottom">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                                <p class="animate_bottom">Yes! We'll be updating our website with more photos and videos of the current projects underway. It's exciting to see your hard earned money helping those less fortunate.</p>
                             </div>
                             <div class="col-md-6 animate_top">
-                                <h3><i class="fa fa-question-circle"></i>Lorem Ipsum has been the industry's standard?</h3>
+                                <h3><i class="fa fa-question-circle"></i>Can I join the team?</h3>
                                 
-                                <p class="animate_bottom">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                                <p class="animate_bottom">Of course! Get in contact with us!</p>
                             </div>                  
                         </div>
                     
@@ -302,11 +280,11 @@
                     <div class="tab-pane fade" id="tab2">
                         <div class="row">
                             <div class="col-md-6 animate_left">
-                                <img src="{% static 'destiny/images/donate.jpg' %}" alt="img" />
+                                <img height='376' width='570' src="{% static 'destiny/images/africa/africa3-1.jpg' %}" alt="img" />
                             </div>                      
                             <div class="col-md-6 left_con animate_right">
-                                <h3>Lorem ipsum dolor sit amet</h3>
-                                <p>Consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.  Donec quam felis, ultricis nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis.</p>
+                                <h3>Be your brother's keeper</h3>
+                                <p>If you would like to help us build homes for families living in poor conditions like the one pictured, then help us and donate. We can do it if we work together</p>
                     
                                 <!--<a class="donate_btn" href="#">Donate Now</a>-->
                                 
@@ -323,68 +301,6 @@
                                 
                             </div>
                         </div>                  
-                    </div>
-                    
-                    <div class="tab-pane fade" id="tab3">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-10 text-center animate_top">
-                                <p>Lorem ipsum dolor sit ametSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.</p>
-                            </div>      
-                            <div class="col-md-1"></div>                            
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="panel panel-danger animate_left">
-                                    <div class="panel-heading"><h3 class="text-center"><b>Well wisher</b><br>-One student for 1 year-</h3></div>
-                                        <div class="panel-body text-center">
-                                            <p class="lead"><strong>$10 / month</strong></p>
-                                        </div>
-                                           <ul class="list-group list-group-flush text-center">
-                                                <li class="list-group-item"><i class="icon-ok text-danger"></i> Personal use</li>
-                                                <li class="list-group-item"><i class="icon-ok text-danger"></i> Unlimited projects</li>
-                                                <li class="list-group-item"><i class="icon-ok text-danger"></i> 27/7 support</li>
-                                            </ul>
-                                        <div class="panel-footer">
-                                            <a class="btn btn-lg btn-block btn-danger" href="#">Become a well wisher</a>
-                                        </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="panel panel-info animate_bottom">
-                                    <div class="panel-heading"><h3 class="text-center"><b>Guardian</b><br>-One student for 2 year-</h3></div>
-                                        <div class="panel-body text-center">
-                                            <p class="lead"><strong>$10 / month</strong></p>
-                                        </div>
-                                            <ul class="list-group list-group-flush text-center">
-                                                <li class="list-group-item"><i class="icon-ok text-danger"></i> Personal use</li>
-                                                <li class="list-group-item"><i class="icon-ok text-danger"></i> Unlimited projects</li>
-                                                <li class="list-group-item"><i class="icon-ok text-danger"></i> 27/7 support</li>
-                                            </ul>
-                                        <div class="panel-footer">
-                                            <a class="btn btn-lg btn-block btn-danger" href="#">Become a guardian</a>
-                                        </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="panel panel-success animate_right">
-                                    <div class="panel-heading"><h3 class="text-center"><b>Angel</b><br>-One student for 3 year-</h3></div>
-                                        <div class="panel-body text-center">
-                                            <p class="lead"><strong>$10 / month</strong></p>
-                                        </div>
-                                            <ul class="list-group list-group-flush text-center">
-                                                <li class="list-group-item"><i class="icon-ok text-danger"></i> Personal use</li>
-                                                <li class="list-group-item"><i class="icon-ok text-danger"></i> Unlimited projects</li>
-                                                <li class="list-group-item"><i class="icon-ok text-danger"></i> 27/7 support</li>
-                                            </ul>
-                                    <div class="panel-footer">
-                                        <a class="btn btn-lg btn-block btn-danger" href="#">Become an angel</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                      
                     </div>                                      
                 </div>  
             </div>
@@ -402,7 +318,7 @@
             
             <div class="row t1">
                 <div class="col-md-3 animate_left">
-                    <img src="{% static 'destiny/images/organizers/org1.jpg' %}" alt="img">
+                    <img height="250" width="250" src="{% static 'destiny/images/staff/mom.jpg' %}" alt="img">
                 </div>
                 <div class="col-md-9 animate_right">
                     <h3>Kelechi Ogbuehi</h3>
@@ -469,12 +385,12 @@
                     {% endcomment %}                   
                 </div>
                 <div class="col-md-3 animate_right">
-                    <img src="{% static 'destiny/images/organizers/org3.jpg' %}" alt="img">
+                    <img height="250" width="250" src="{% static 'destiny/images/staff/maurine.jpg' %}" alt="img">
                 </div>
             </div>
              <div class="row t1">
                 <div class="col-md-3 animate_left">
-                    <img src="{% static 'destiny/images/organizers/org3.jpg' %}" alt="img">
+                    <img height="250" width="250" src="{% static 'destiny/images/staff/cj.jpg' %}" alt="img">
                 </div>
                 <div class="col-md-9 animate_right">
                     <h3>Christopher Ogbuehi Jr</h3>
