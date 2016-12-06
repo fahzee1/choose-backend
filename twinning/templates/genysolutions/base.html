@@ -46,9 +46,6 @@
                         <li>
                             <a class="page-scroll" href="#services">Services</a>
                         </li>
-                        <li>
-                            <a class="page-scroll" href="#video">Video</a>
-                        </li>
                          <li>
                             <a class="page-scroll" href="#solutions">Solutions</a>
                         </li>
@@ -80,9 +77,10 @@
                     <h1 class="intro-lead-in">Gen Y Solutions, blissful innovation</h1>
                     <span class="intro-heading">Next generation application & software development</span>
                     <div id="subscribe" class="header-buttons">
-                     <form class="subscribe-form">
-                        <input type="email" id="sub-email" placeholder="Your email adress"/>
-                        <button type="submit">Subscribe</button>
+                     <form class="subscribe-form" action="https://formspree.io/hello@genysolutions.co" method="post">
+                        <input type="email" id="sub-email" placeholder="Enter Your Email" name="_replyto"/>
+                        <input type="hidden" name="_subject" value="New submission from Gen Y!" />
+                        <button type="submit">Go</button>
                         <div id="subscribe-success"></div>
                     </form>
                     </div>
@@ -253,32 +251,32 @@
                 <div class="row">
                     <!-- SOLUTIONS HEADING -->
                     <div class="col-lg-12 text-center">
-                        <h2 class="section-heading">Our solutions </h2>
+                        <h2 class="section-heading">Our core competencies</h2>
                         <span class="separator"></span>
-                        <p class="section-subheading ">A few of our custom solutiions</p>
+                        <p class="section-subheading ">A few things we're good at</p>
                     </div>
                     <!-- END SOLUTIONS HEADING -->
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="chart" data-percent="85">85<span class="percent">%</span> </div>
+                        <div class="chart" data-percent="100">100<span class="percent">%</span> </div>
                         <div class="chart-content">
                             <i class="nc-icon-outline suitcase"></i>
-                            <h4 class="service-heading">Enterprise solutions</h4>
+                            <h4 class="service-heading">iOS & Android development</h4>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="chart" data-percent="75">75<span class="percent">%</span></div>
+                        <div class="chart" data-percent="100">100<span class="percent">%</span></div>
                         <div class="chart-content">
                             <i class="nc-icon-outline chat"></i>
-                            <h4 class="service-heading">Brand Marketing</h4>
+                            <h4 class="service-heading">Custom software engineering</h4>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="chart" data-percent="65">65<span class="percent">%</span></div>
+                        <div class="chart" data-percent="100">100<span class="percent">%</span></div>
                         <div class="chart-content">
                             <i class="nc-icon-outline world"></i>
-                            <h4 class="service-heading">Target information</h4>
+                            <h4 class="service-heading">Brand development</h4>
                         </div>
                     </div>
                 </div>
@@ -296,12 +294,14 @@
                     <div class="col-lg-12 text-center">
                         <h2 class="section-heading">Our pricing</h2>
                         <span class="separator"></span>
-                        <p class="section-subheading ">Doesn't get much better then this.</p>
+                        <p class="section-subheading ">Our prices are below industry standard</p>
                     </div>
                     <!-- END PRICING TABLES HEADING -->
                 </div>
                 <div class="row outer-margin">
                     <!-- PRICING TABLE 1 -->
+
+                    {% comment %}
                     <div class="col-md-4">
                         <div class="row pricing-title">BASIC</div>
                         <div class="row pricing">
@@ -322,28 +322,37 @@
                             </div>
                         </div>
                     </div>
+
+                    {% endcomment %}
+
                     <!-- PRICING TABLE 2 -->
-                    <div class="col-md-4">
-                        <div class="row pricing-title">STANDARD</div>
+                    <div>
+                        <div class="row pricing-title">Get in contact with one our professionals for pricing</div>
                         <div class="row pricing active">
                             <div class="col-lg-3 col-md-3 col-sm-3" >
                                 <div class="row">
-                                    <span class="pricing-price"><span class="currency">$</span>200</span>
+                                    <span class="pricing-price"><strike><span class="currency">$</span>5000</strike></span>
+                                    {% comment %}
                                     <span class="pricing-time">/mo</span>
-                                    <div class="billing-time">billed annually</div>
+                                    {% endcomment %}
+                                    <div class="billing-time">You'll receive your quote after reaching out to us</div>
                                 </div>
                             </div>
                             <div class="pricing-row selected"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-plus"></i>Everything in BASIC, including:</span></span></div>
-                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Routing Using Full Context</span></span></div>
+                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Your own personal account manager</span></span></div>
                             <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Unlimited Email, Chat & Social</span></span></div>
-                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Omni-channel real time SLA</span></span></div>
-                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Disaster Recovery</span></span></div>
-                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Tight IVR/ACD Integration</span></span></div>
+                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>24/7 support</span></span></div>
+                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Custom brand design</span></span></div>
+                            <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Custom software & app engineering</span></span></div>
+                             <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Custom API intergrations</span></span></div>
+                              <div class="pricing-row"><span class="pricing-value"><span class="pricing-option"><i class="fa fa-check"></i>Screenshot and App Store submissions</span></span></div>
                             <div class="pricing-row button-container">
                                 <a class="page-scroll secondary-button" href="#contact">Get Started</a>
                             </div>
                         </div>
                     </div>
+
+                    {% comment %}
                     <!-- PRICING TABLE 3 -->
                     <div class="col-md-4">
                         <div class="row pricing-title">PREMIUM</div>
@@ -368,6 +377,7 @@
                 </div>
             </div>
         </section>
+        {% endcomment %}
         <!-- PRICING TABLES -->
         {% endblock %}
 
@@ -494,31 +504,31 @@
             <div class="container">
                 <div class="slider">
                     <div class="clients-content">
-                        <a href="#"><img src="//logo.clearbit.com/spotify.com" alt=""></a>
+                        <a href="//altruus.com"><img src="//logo.clearbit.com/altruus.com" alt=""></a>
                     </div>
                     <div class="clients-content">
-                        <a href="#"><img src="//logo.clearbit.com/pepsi.com" alt=""></a>
+                        <a href="//luxuretv.com"><img src="//logo.clearbit.com/luxuretv.com" alt=""></a>
                     </div>
                     <div class="clients-content">
-                        <a href="#"><img src="//logo.clearbit.com/amazon.com" alt=""></a>
+                        <a href="#"><img src="//logo.clearbit.com/luxottica.com" alt=""></a>
                     </div>
                     <div class="clients-content">
-                        <a href="#"><img src="//logo.clearbit.com/adroll.com" alt=""></a>
+                        <a href="//apstudynotes.org"><img src="//logo.clearbit.com/apstudynotes.org" alt=""></a>
                     </div>
                     <div class="clients-content">
-                        <a href="#"><img src="//logo.clearbit.com/stripe.com" alt=""></a>
+                        <a href="//apsu.edu"><img src="//logo.clearbit.com/apsu.edu" alt=""></a>
                     </div>
                     <div class="clients-content">
-                        <a href="#"><img src="//logo.clearbit.com/aa.com" alt=""></a>
+                        <a href="//guardian.ng"><img src="//logo.clearbit.com/guardian.ng" alt=""></a>
                     </div>
                     <div class="clients-content">
-                        <a href="#"><img src="//logo.clearbit.com/nike.com" alt=""></a>
+                        <a href="//dotloop.com"><img src="//logo.clearbit.com/dotloop.com" alt=""></a>
                     </div>
                     <div class="clients-content">
-                        <a href="#"><img src="//logo.clearbit.com/betterment.com" alt=""></a>
+                        <a href="//betterment.com"><img src="//logo.clearbit.com/betterment.com" alt=""></a>
                     </div>
                     <div class="clients-content">
-                        <a href="#"><img src="//logo.clearbit.com/wepay.com" alt=""></a>
+                        <a href="//hopper.com"><img src="//logo.clearbit.com/hopper.com" alt=""></a>
                     </div>
                     <div class="clients-content">
                         <a href="#"><img src="//logo.clearbit.com/affirm.com" alt=""></a>
@@ -535,10 +545,11 @@
             <div class="container">
                 <div class="row">
                     <h3>Subscribe to receive free updates!</h3>
-                    <form class="subscribe-form" id="subscribe-form">
-                        <input type="email" id="sub-email"  placeholder="Your email adress"/>
-                        <button type="submit">Subscribe</button>
-                        <div id="subscribe-success2"></div>
+                    <form class="subscribe-form" action="https://formspree.io/hello@genysolutions.co" method="post">
+                        <input type="email" id="sub-email" placeholder="Enter Your Email" name="_replyto"/>
+                        <input type="hidden" name="_subject" value="New submission from Gen Y!" />
+                        <button type="submit">Go</button>
+                        <div id="subscribe-success"></div>
                     </form>
                 </div>
             </div>
@@ -563,19 +574,19 @@
                     <!-- END CONTACT HEADING -->
                     <div class="row">
                         <!-- CONTACT FORM -->
-                        <form name="sentMessage" id="contactForm">
+                        <form name="sentMessage" id="contactForm" method="post" action="https://formspree.io/hello@genysolutions.co">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
+                                    <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name." name="_name">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group pull-right">
-                                    <input type="email" class="form-control" placeholder="Email" id="email" required data-validation-required-message="Please enter your email address.">
+                                    <input type="email" class="form-control" placeholder="Email" id="email" required data-validation-required-message="Please enter your email address." name="_replyto">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group form-textarea">
-                                    <textarea class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                                    <textarea class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message." name="_message"></textarea>
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="clearfix"></div>
@@ -610,9 +621,6 @@
                                     <a class="page-scroll" href="#services">Services</a>
                                 </li>
                                 <li class="">
-                                    <a class="page-scroll" href="#video">Video</a>
-                                </li>
-                                <li class="">
                                     <a class="page-scroll" href="#solutions">Solutions</a>
                                 </li>
                                 <li class="">
@@ -630,7 +638,7 @@
                                     <a class="page-scroll" href="#"><span class="fa fa-phone"></span>214-566-8710</a>
                                 </li>
                                 <li class="">
-                                    <a class="page-scroll" href="#"><span class="fa fa-envelope"></span>genysolutions1@gmail.com</a>
+                                    <a class="page-scroll" href="#"><span class="fa fa-envelope"></span>hello@genysolutions.co</a>
                                 </li>
                                 <li class="">
                                     <a class="page-scroll" href="#"><span class="fa fa-map-marker"></span>1203 Wilshire ct, Allen TX, 75002</a>

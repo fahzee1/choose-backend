@@ -55,6 +55,7 @@
 
   // FORM VALIDATION
 
+/*
   $(".subscribe-form input,#subscribe-form2 input").jqBootstrapValidation({
     preventSubmit: true,
     submitSuccess: function($form, event) {
@@ -78,7 +79,9 @@
 
     }
   });
+*/
 
+/*
   $("#contactForm input, #contactForm textarea").jqBootstrapValidation({
     preventSubmit: true,
     submitError: function($form, event, errors) {
@@ -133,6 +136,8 @@
       return $(this).is(":visible");
     },
   });
+
+*/
 
 
   // HEADER PARTICLES EFFECT
