@@ -70,7 +70,7 @@
                         <div class="logo"><img src="{% static 'destiny/images/logo.png' %}" alt="logo"></div>
                         {% endcomment %}
 
-                        <span class="subtitle">Here to help Nigeria.</span>
+                        <span class="subtitle">Giving Hope To The Hopeless.</span>
                     </div>                  
                     <div class="col-md-9 slider_title">
                         <h2 class="animate_top">Help us build 2 to 4 houses a year for those less fortunate.<span id="pageLoad" style="visibility:hidden;">0</span></h2>
@@ -79,10 +79,10 @@
                         <div class="animate_bottom">
                             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                                 <input type="hidden" name="cmd" value="_donations">
-                                <input type="hidden" name="business" value="genesiscareer@aol.com">
+                                <input type="hidden" name="business" value="destinyfoundation2014@gmail.com">
                                 <input type="hidden" name="lc" value="US">
-                                <input type="hidden" name="item_name" value="theweblab">
-                                <input type="hidden" name="no_note" value="0">
+                                <input type="hidden" name="item_name" value="Destiny Foundation Donation">
+                                <input type="hidden" name="no_note" value="0f">
                                 <input type="hidden" name="currency_code" value="USD">
                                 <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">
                                 <input type="submit" class="top_btn" value="Donate Now">                        
@@ -132,7 +132,7 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10 welcome_txt text-center animate_bottom">
-                    <p>The goal of <span>Team Destiny Foundation</span> is to provide <span>adequate</span> housing and accomodations for <span>less fortunate</span> families in Nigeria.
+                    <p><span>Our goal</span> is to provide <span>adequate</span> housing and accomodations for <span>less fortunate</span> families in Africa.
                     </p>
                 </div>
                 <div class="col-md-1"></div>
@@ -140,6 +140,7 @@
         </div>
     
     
+    {% block video %}
     <!-- Video -->
     <div class="education" id="history">
         <div class="container text-center">
@@ -168,14 +169,20 @@
             </div>         
         </div>
     </div>
-    
+    {% endblock %}
+
     <!-- About us -->
     <div class="about_us">
         <div class="container">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h3 class="animate_top">Destiny Foundation is...</h3>
+            </div>
+            <div class="col-md-2"></div>
             <div class="row text-center">
                 <div class="col-md-1"></div>
                 <div class="col-md-7 animate_left">
-                    <h3>Be your brothers keeper</h3>
+                    <h3>A non profit organization dedicated to building homes for the impoverished in Africa</h3>
                 </div>
                 <div class="col-md-3 animate_right">
                     <a href="#help"><button class="top_btn">Donate</button></a>
@@ -290,9 +297,9 @@
                                 
                                 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                                 <input type="hidden" name="cmd" value="_donations">
-                                <input type="hidden" name="business" value="genesiscareer@aol.com">
+                                <input type="hidden" name="business" value="destinyfoundation2014@gmail.com">
                                 <input type="hidden" name="lc" value="US">
-                                <input type="hidden" name="item_name" value="theweblab">
+                                <input type="hidden" name="item_name" value="Destiny Foundation Donation">
                                 <input type="hidden" name="no_note" value="0">
                                 <input type="hidden" name="currency_code" value="USD">
                                 <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">
@@ -318,7 +325,7 @@
             
             <div class="row t1">
                 <div class="col-md-3 animate_left">
-                    <img height="250" width="250" src="{% static 'destiny/images/staff/mom.jpg' %}" alt="img">
+                    <img height="250" width="250" src="{% static 'destiny/images/staff/mom.png' %}" alt="img">
                 </div>
                 <div class="col-md-9 animate_right">
                     <h3>Kelechi Ogbuehi</h3>
@@ -353,12 +360,12 @@
                     {% endcomment %}                   
                 </div>
                 <div class="col-md-3 animate_right">
-                    <img src="{% static 'destiny/images/organizers/org2.jpg' %}" alt="img">
+                    <img height="250" width="250" src="{% static 'destiny/images/staff/curt.jpg' %}" alt="img">
                 </div>              
             </div>
             <div class="row t1">
                 <div class="col-md-3 animate_left">
-                    <img src="{% static 'destiny/images/organizers/org3.jpg' %}" alt="img">
+                    <img height="250" width="250" src="{% static 'destiny/images/staff/itata.png' %}" alt="img">
                 </div>
                 <div class="col-md-9 animate_right">
                     <h3>Itata Itata Esq</h3>
@@ -411,7 +418,7 @@
             </div>
              <div class="row t1">
                 <div class="col-md-3 animate_left">
-                    <img src="{% static 'destiny/images/organizers/org3.jpg' %}" alt="img">
+                    <img height="250" width="250" src="{% static 'destiny/images/organizers/org3.jpg' %}" alt="img">
                 </div>
                 <div class="col-md-9 animate_right">
                     <h3>Atny Lui Akwuruoha</h3>
@@ -438,28 +445,14 @@
                 </div>
             </div>
                 
-            <form id="signup" action="index.html" method="get" class="animate_bottom">
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8 text-center">                                          
-                        <span id="response"></span>
-                    </div>  
-                    <div class="col-md-2"></div>
-                </div>
+            <form id="signup" action="https://formspree.io/destinyfoundation2014@gmail.com" method="POST">
                 <div class="row">   
                     <div class="col-md-2"></div>
                     <div class="col-md-5 text-center nopadding">
-                        <input type="text" name="email" id="email" placeholder="Your email address..." class="form-control" />
+                        <input type="email" name="_replyto" id="email" placeholder="Your email address..." class="form-control" />
                     </div>
                     <div class="col-md-3 text-center nopadding">    
                         <input type="submit" name="submit" value="Subscribe" id="subscribe_button" class="button " />
-                    </div>
-                    <div class="col-md-2"></div>
-                </div>
-                <div class="row">   
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8 text-center">  
-                            <div id="no-spam">We'll never spam or give this address away</div>
                     </div>
                     <div class="col-md-2"></div>
                 </div>
@@ -606,45 +599,23 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-5 contact_form animate_left">
-                    
-                        
-                    
-                        <form name="contactForm" id='contact_form' method="post" action='lib/ajax-html-contact-form/email.php'>
-                            
-                            
-                                <div id='mail_success' class='success'><img src="{% static 'destiny/images/success.png' %}" alt="img">Your message has been sent successfully.</div>
-                                <div id='mail_fail' class='error'><img src="{% static 'destiny/images/error.png' %}" alt="img"> Sorry, error occured this time sending your message.</div>
-                                
-                                <div id='name_error' class='error'><img src="{% static 'destiny/images/error.png' %}" alt="img">Please enter your name.</div>
-                                <input type="text"  name='name' id='name' class="form-control" placeholder="Your name">
-                                
-                                <div id='email_error' class='error'><img src="{% static 'destiny/images/error.png' %}" alt="img">Please enter your valid E-mail ID.</div>
-                                <input type="text" name='emailaddress' id='emailaddress' class="form-control" placeholder="Email">
-                            
-                                <div id='message_error' class='error'><img src="{% static 'destiny/images/error.png' %}" alt="img">Please enter your message.</div>
-                                <textarea name='message' id='message' class="form-control" placeholder="Message"></textarea>
-                                                            
-                                <button class="bttn" id='send_message' type="submit" >Send</button>
-                        </form>                     
-                    
-                    </div>
-                    
-                    <div class="col-md-5 contact_info animate_right">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 contact_info animate_right">
                         
                         <p>Want to get in contact with us to learn more about our programs? Fill out the form and we'll be in touch.</p>
                         
+                        {% comment %}
                         <h5>Address</h5>
                         <p>1203 Wilshire ct<br>Allen, TX 75002</p>
+                        {% endcomment %}
                         
                         <h5>Phone</h5>
                         <p>+4698671166</p>
                         
                         <h5>Email</h5>
-                        <p>team.destinyfoundation@gmail.com</p>
+                        <p>destinyfoundation2014@gmail.com</p>
                     </div>
-                    <div class="col-md-1"></div>
+                    <div class="col-md-3"></div>
 
                 
                 </div>
@@ -662,10 +633,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <ul class="animate_bottom">
-                        <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                        <li><a href=""><i class="fa fa-facebook"></i></a></li>                      
-                        <li><a href=""><i class="fa fa-pinterest"></i></a></li>
-                        <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>                      
+                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                     </ul>
                 </div>
             </div>
