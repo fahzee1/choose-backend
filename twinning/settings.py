@@ -132,8 +132,8 @@ DATABASES = {
     'default': {
         'ENGINE':'django.db.backends.postgresql_psycopg2',
         'NAME': 'choose',
-        'USER':'choose',
-        'PASSWORD':'choose',
+        'USER':os.environ.get('DB_USER', ''),
+        'PASSWORD':os.environ.get('DB_PASS', ''),
         'HOST':'localhost'
     }
 }
@@ -163,13 +163,13 @@ USE_L10N = True
 USE_TZ = True
 
 #email settings
-DEFAULT_FROM_EMAIL = "genysolutions1@gmail.com"
-SERVER_EMAIL = "genysolutions1@gmail.com"
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_USER', '')
+SERVER_EMAIL = os.environ.get('EMAIL_USER', '')
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "genysolutions1@gmail.com"
-EMAIL_HOST_PASSWORD = 'genychoose'
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS', '')
 
 #databse performance help
 CONN_MAX_AGE = 60 # tune this based on traffic
